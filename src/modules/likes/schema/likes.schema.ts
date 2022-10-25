@@ -11,11 +11,11 @@ export type LikeDocument = Like & Document;
 export class Like {
 
     @Prop()
-    _id: number;
+    _id: string;
 
     @Prop({
         type: String,
-        enum: ['like', 'smile', 'love', 'angry',],
+        enum: ['like', 'smile', 'love', 'angry'],
         default: 'like'
 
         // enum: EmojiType,
@@ -27,7 +27,7 @@ export class Like {
     @Prop({ type: String, ref: 'User' })
     user: User;
 
-    @Prop({ type: String, ref: 'User' })
+    @Prop({ type: String, ref: 'Article' })
     article: Article;
 }
 export const LikeSchema = SchemaFactory.createForClass(Like)

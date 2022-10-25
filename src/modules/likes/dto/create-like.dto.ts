@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsInt, IsEnum } from "class-validator";
+import { IsNotEmpty, IsEnum, IsUUID } from "class-validator";
 import { EmojiType, EMOJI_MESSAGE, EMOJI_OPTION } from '../../../utilities/common'
 export class CreateLikeDto {
 
@@ -6,9 +6,9 @@ export class CreateLikeDto {
     @IsNotEmpty()
     readonly type: EmojiType;
 
-    @IsInt()
+    @IsUUID()
     @IsNotEmpty()
-    readonly article: number;
+    readonly article: string;
 
-    user: number;
+    user: string;
 }

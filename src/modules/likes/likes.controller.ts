@@ -1,108 +1,88 @@
-// import { Controller, Post, Delete, Headers, Get, Param, UsePipes, ValidationPipe, Body, HttpException, HttpStatus, ParseIntPipe } from '@nestjs/common';
-// import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
-// import { ArticlesService } from '../articles/articles.service';
-// import { CreateLikeDto } from './dto/create-like.dto';
-// import { LikesService } from './likes.service';
+import { Controller, Post, Delete, Headers, Get, Param, UsePipes, ValidationPipe, Body, HttpException, HttpStatus, ParseUUIDPipe } from '@nestjs/common';
+import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
+import { ArticlesService } from '../articles/articles.service';
+import { CreateLikeDto } from './dto/create-like.dto';
+import { LikesService } from './likes.service';
 
-// @Controller('likes')
-// export class LikesController {
-//     constructor(
-//         private readonly likesService: LikesService,
-//         private readonly articlesService: ArticlesService
-//     ) { }
+@Controller('likes')
+export class LikesController {
+    constructor(
+        private readonly likesService: LikesService,
+        private readonly articlesService: ArticlesService
+    ) { }
 
-//     // #=======================================================================================#
-//     // #			                     create like on article                                #
-//     // #=======================================================================================#
-//     @Post()
-//     @UsePipes(ValidationPipe)
-//     async createArticle(@Body() _articleData: CreateLikeDto, @Headers() _headers) {
-//         try {
-//             _articleData.user = GET_ID_FROM_TOKEN(_headers)
-//             let data: any;
-//             data = await this.articlesService.getArticleById(_articleData.article)
-//             if (!data) {
-//                 throw new Error(`no article with this id =${_articleData.article}`);
-//             }
+    // #=======================================================================================#
+    // #			                     create like on article                                #
+    // #=======================================================================================#
+    @Post()
+    @UsePipes(ValidationPipe)
+    async createArticle(@Body() _articleData: CreateLikeDto, @Headers() _headers) {
+        let data: any;
+        _articleData.user = GET_ID_FROM_TOKEN(_headers)
 
-//             data = await this.likesService.checkLikeArticle(_articleData.user, _articleData.article)
-//             if (data.length > 0) {
-//                 throw new Error('You have already liked this article');
-//             }
+        const articleData = await this.articlesService.getArticleById(_articleData.article)
+        if (!articleData) throw new HttpException(`no article with this id =${_articleData.article}`, HttpStatus.NOT_FOUND);
 
-//             data = await this.likesService.createLikeArticle(_articleData)
-//             if (!data) {
-//                 throw new Error('can\'t like this article please try again');
-//             }
 
-//             return {
-//                 statusCode: 200,
-//                 data
-//             }
+        data = await this.likesService.checkLikeArticle(_articleData.user, _articleData.article)
+        if (data) throw new HttpException('You have already liked this article', HttpStatus.BAD_REQUEST);
 
-//         } catch (error) {
-//             return new HttpException(error.message, HttpStatus.BAD_REQUEST)
-//         }
-//     }
-//     // #=======================================================================================#
-//     // #			                        unlike article                                     #
-//     // #=======================================================================================#
-//     @Delete(':articleID')
-//     @UsePipes(ValidationPipe)
-//     async unLikeArticle(@Param('articleID', ParseIntPipe) _articleID: number, @Headers() _headers) {
-//         try {
-//             const userID = GET_ID_FROM_TOKEN(_headers)
-//             let data: any;
-//             data = await this.articlesService.getArticleById(_articleID)
-//             if (!data) {
-//                 throw new Error(`no article with this id =${_articleID}`);
-//             }
 
-//             data = await this.likesService.getLikeByArticleId(_articleID)
-//             if (data.user.id !== userID) {
-//                 throw new Error('this like can only be unlike by the person who created it')
-//             }
+        data = await this.likesService.createLikeArticle(_articleData)
+        if (!data) throw new HttpException('can\'t like this article please try again', HttpStatus.BAD_REQUEST);
+        else await this.articlesService.updateNumberOfLikes(data.article, articleData.likes + 1)
 
-//             data = await this.likesService.checkLikeArticle(userID, _articleID)
-//             if (data.length === 0) {
-//                 throw new Error('You didn\'t like this article before');
-//             }
 
-//             data = await this.likesService.unLikeArticle(data[0].id)
-//             if (data.affected === 0) {
-//                 throw new Error('can\'t unLiked this article');
-//             }
+        return {
+            data: {
+                _id: data._id,
+                type: data.type,
+                user: data.user,
+                article: data.article
+            }
+        }
+    }
+    // #=======================================================================================#
+    // #			                        unlike article                                     #
+    // #=======================================================================================#
+    @Delete(':articleID')
+    @UsePipes(ValidationPipe)
+    async unLikeArticle(@Param('articleID', ParseUUIDPipe) _articleID: string, @Headers() _headers) {
+        let data: any;
+        const userID = GET_ID_FROM_TOKEN(_headers)
 
-//             return {
-//                 statusCode: 200,
-//                 message: 'unLiked successfully'
-//             }
+        const articleData = await this.articlesService.getArticleById(_articleID)
+        if (!articleData) throw new HttpException(`no article with this id =${_articleID}`, HttpStatus.NOT_FOUND);
 
-//         } catch (error) {
-//             return new HttpException(error.message, HttpStatus.BAD_REQUEST)
-//         }
-//     }
-//     // #=======================================================================================#
-//     // #			                    get all like on article                                #
-//     // #=======================================================================================#
-//     @Get(':articleID')
-//     async getAllLikeOnArticle(@Param('articleID', ParseIntPipe) _articleID: number) {
-//         try {
 
-//             const data = await this.likesService.getAllLikeOnArticle(_articleID)
+        data = await this.likesService.getLikeByArticleId(_articleID)
 
-//             if (data.length === 0) {
-//                 throw new Error(`there is no like with this article = ${_articleID}`);
-//             }
+        if (data && data.user !== userID) {
+            throw new HttpException('this like can only be unlike by the person who created it', HttpStatus.FORBIDDEN)
+        }
 
-//             return {
-//                 statusCode: 200,
-//                 count: data.length,
-//                 data
-//             }
+        data = await this.likesService.checkLikeArticle(userID, _articleID)
 
-//         } catch (error) {
-//             return new HttpException(error.message, HttpStatus.BAD_REQUEST)
-//         }
-//     }
-// }
+        if (!data) throw new HttpException('You didn\'t like this article before', HttpStatus.BAD_REQUEST);
+
+
+        data = await this.likesService.unLikeArticle(data._id)
+        if (!data) throw new HttpException('can\'t unLiked this article', HttpStatus.BAD_REQUEST);
+        else await this.articlesService.updateNumberOfLikes(data.article, articleData.likes - 1)
+
+        return { message: 'unLiked successfully' }
+    }
+    // #=======================================================================================#
+    // #			                    get all like on article                                #
+    // #=======================================================================================#
+    @Get(':articleID')
+    async getAllLikeOnArticle(@Param('articleID', ParseUUIDPipe) _articleID: string) {
+        const data = await this.likesService.getAllLikeOnArticle(_articleID)
+        if (data.length == 0) throw new HttpException(`there is no like with this article = ${_articleID}`, HttpStatus.NOT_FOUND);
+
+        return {
+            count: data.length,
+            data
+        }
+    }
+}

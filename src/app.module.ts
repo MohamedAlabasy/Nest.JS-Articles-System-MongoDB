@@ -7,7 +7,7 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 import { CheckTokensMiddleware } from './middleware/check-tokens.middleware';
 import { EmailVerificationModule } from './modules/email-verification/email-verification.module';
 import { ArticlesModule } from './modules/articles/articles.module';
-// import { LikesModule } from './modules/likes/likes.module';
+import { LikesModule } from './modules/likes/likes.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
 
@@ -18,7 +18,7 @@ import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.
     UsersModule,
     EmailVerificationModule,
     ArticlesModule,
-    // LikesModule,
+    LikesModule,
     CommentsModule,
     ForgotPasswordModule,
   ]

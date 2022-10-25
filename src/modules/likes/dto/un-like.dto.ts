@@ -1,13 +1,12 @@
-import { IsNotEmpty, IsInt } from "class-validator";
+import { IsNotEmpty, IsUUID } from "class-validator";
 
 export class UnLikeDto {
-
-    @IsInt()
+    @IsUUID()
     @IsNotEmpty()
-    readonly user: number;
+    readonly user: string;
 
-    @IsInt()
+    @IsUUID()
     @IsNotEmpty()
-    readonly article: number;
+    readonly article: string;
 
 }

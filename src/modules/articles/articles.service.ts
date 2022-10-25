@@ -55,4 +55,11 @@ export class ArticlesService {
     async deleteArticle(_id: string) {
         return await this.articlesModel.findByIdAndDelete({ _id });
     }
+
+    // #=======================================================================================#
+    // #			                     update number of Likes                                #
+    // #=======================================================================================#
+    async updateNumberOfLikes(_id: string, likes: number): Promise<Article> {
+        return await this.articlesModel.findByIdAndUpdate({ _id }, { likes }, { new: true })
+    }
 }
