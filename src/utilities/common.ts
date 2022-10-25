@@ -16,3 +16,6 @@ export const EMOJI_MESSAGE: object = { message: 'type must be like or smile or l
 // REGISTER CODE
 export const REGISTER_CODE: number = Math.floor(100000 + Math.random() * 900000);
 export const EXPIRE_CODE_TIME: number = 3600000;
+
+// select
+export const SELECT: string = '-__v';

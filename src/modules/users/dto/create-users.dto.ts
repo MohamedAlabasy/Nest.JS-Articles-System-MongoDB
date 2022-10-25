@@ -2,7 +2,6 @@ import { IsNotEmpty, IsString, IsEmail, Length, Matches } from "class-validator"
 import { PASSWORD_RULE, PASSWORD_MESSAGE } from "../../../utilities/common";
 
 export class CreateUsersDto {
-
     @IsNotEmpty()
     @IsString()
     readonly name: string;

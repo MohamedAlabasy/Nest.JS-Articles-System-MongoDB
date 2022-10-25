@@ -27,43 +27,39 @@ export class UsersController {
     @Post('register')
     @UsePipes(ValidationPipe)
     async createNewUser(@Body(RegisterPipe) _userData: CreateUsersDto) {
-        try {
-            let data: User;
-            data = await this.usersService.getUserByEmail(_userData.email)
-            if (data) throw new Error('already exists')
+        let data: User;
+        data = await this.usersService.getUserByEmail(_userData.email)
+        if (data) throw new Error('already exists')
 
 
-            data = await this.usersService.createNewUser(_userData)
-            // use create and wanna send email code
-            if (data) {
-                // auto generate code = 6 numbers
-                const registerCode = REGISTER_CODE
-                const storeEmailCode = await this.emailVerificationService.createNewEmailVerification(registerCode, EXPIRE_CODE_TIME, data._id)
+        data = await this.usersService.createNewUser(_userData)
+        // use create and wanna send email code
+        if (data) {
+            // auto generate code = 6 numbers
+            const registerCode = REGISTER_CODE
+            const storeEmailCode = await this.emailVerificationService.createNewEmailVerification(registerCode, EXPIRE_CODE_TIME, data._id)
 
-                if (storeEmailCode)
-                    emailVerification(_userData, registerCode);
-                else
-                    throw new Error(`can't send email code to this email = ${_userData.email}`)
-            }
+            if (storeEmailCode)
+                emailVerification(_userData, registerCode);
+            else
+                throw new Error(`can't send email code to this email = ${_userData.email}`)
+        }
 
-            // to remove password from object before retune data to user 
-            delete data.password
-            console.log(delete data.password);
-            console.log(data);
+        // to remove password from object before retune data to user 
+        delete data.password
+        console.log(delete data.password);
+        console.log(data);
 
-            return {
-                statusCode: 200,
-                message: `The code has been sent to your email = ${_userData.email}`,
-                // data: {
-                //     _id: data._id,
-                //     name: data.name,
-                //     email: data.email,
-                //     is_verification: data.is_verification,
-                // }
-                data
-            }
-        } catch (error) {
-            return new HttpException(error.message, HttpStatus.BAD_REQUEST)
+        return {
+            statusCode: 200,
+            message: `The code has been sent to your email = ${_userData.email}`,
+            // data: {
+            //     _id: data._id,
+            //     name: data.name,
+            //     email: data.email,
+            //     is_verification: data.is_verification,
+            // }
+            data
         }
     }
 
