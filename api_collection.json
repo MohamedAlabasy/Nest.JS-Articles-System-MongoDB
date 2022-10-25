@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "9a5298c5-abe3-40b4-83db-d2b737512e22",
-		"name": "Nest.JS Articles System",
+		"_postman_id": "f6e45af9-a951-4f50-ab4d-15b10a5961cd",
+		"name": "Nest.JS Articles System MongoDB",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "19706659"
 	},
@@ -75,7 +75,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"code\":760762,\r\n    \"user\":1\r\n}",
+							"raw": "{\r\n    \"code\":731811,\r\n    \"user\":\"7c582f5d-09bd-4365-b14c-8c61b054a398\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -338,7 +338,7 @@
 			"name": "Comments",
 			"item": [
 				{
-					"name": "create new articles",
+					"name": "create new commet",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -364,7 +364,7 @@
 					"response": []
 				},
 				{
-					"name": "get all comments on articles",
+					"name": "get all comments",
 					"request": {
 						"method": "GET",
 						"header": [],
