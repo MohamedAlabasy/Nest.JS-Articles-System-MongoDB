@@ -12,6 +12,7 @@ nest g co controllerName
 # generate service
 nest g s serviceName 
 
+
 # install bcryptjs
 npm i bcryptjs --save
 npm i -D @types/bcryptjs
@@ -29,4 +30,7 @@ npm i -D  @types/nodemailer
 
 # install mongoose
 npm i @nestjs/mongoose mongoose
+
+# install uuid
+npm i uuid
 
