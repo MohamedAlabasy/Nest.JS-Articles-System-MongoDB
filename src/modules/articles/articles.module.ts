@@ -1,13 +1,17 @@
-// import { Module } from '@nestjs/common';
-// import { MongooseModule } from '@nestjs/mongoose';
-// import { Article, ArticleSchema } from './schema/articles.schema';
-// import { UsersService } from '../users/users.service';
-// import { ArticlesController } from './articles.controller';
-// import { ArticlesService } from './articles.service';
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Article, ArticleSchema } from './schema/articles.schema';
+import { UsersService } from '../users/users.service';
+import { ArticlesController } from './articles.controller';
+import { ArticlesService } from './articles.service';
+import { User, UserSchema } from '../users/schema/user.schema';
 
-// @Module({
-//   imports: [MongooseModule.forFeature([{ name: Article.name, schema: ArticleSchema }])],
-//   controllers: [ArticlesController],
-//   providers: [ArticlesService, UsersService]
-// })
-// export class ArticlesModule { }
+@Module({
+    imports: [
+        MongooseModule.forFeature([{ name: Article.name, schema: ArticleSchema }]),
+        MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    ],
+    controllers: [ArticlesController],
+    providers: [ArticlesService, UsersService]
+})
+export class ArticlesModule { }

@@ -11,5 +11,5 @@ export class CreateArticleDto {
     @IsNotEmpty()
     readonly description: string;
 
-    user: number;
+    user: string;
 }

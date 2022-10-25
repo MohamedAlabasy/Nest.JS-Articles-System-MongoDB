@@ -107,7 +107,7 @@ export class UsersController {
 
 
         // to add token
-        const token: string = 'Bearer ' + jwt.sign({ id: userData._id, is_verification: userData.is_verification }, ACCESS_TOKEN_SECRET as string, {
+        const token: string = 'Bearer ' + jwt.sign({ _id: userData._id, is_verification: userData.is_verification }, ACCESS_TOKEN_SECRET as string, {
             expiresIn: 86400 //for 24 hour
         });
 
