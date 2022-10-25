@@ -19,7 +19,7 @@ git clone https://github.com/MohamedAlabasy/Nest.JS-Articles-System-MongoDB.git
 npm i
 ```
 
-`Step 3` : Create a database called `articles_system` , then to run server on watch mode :
+`Step 3` : Run server on watch mode :
 
 ```
 npm run start:dev
