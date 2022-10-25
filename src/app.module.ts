@@ -9,18 +9,18 @@ import { EmailVerificationModule } from './modules/email-verification/email-veri
 // import { ArticlesModule } from './modules/articles/articles.module';
 // import { LikesModule } from './modules/likes/likes.module';
 // import { CommentsModule } from './modules/comments/comments.module';
-// import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
+import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(mongodb),
 
     UsersModule,
-    // EmailVerificationModule,
+    EmailVerificationModule,
     // ArticlesModule,
     // LikesModule,
     // CommentsModule,
-    // ForgotPasswordModule,
+    ForgotPasswordModule,
   ]
 })
 export class AppModule implements NestModule {

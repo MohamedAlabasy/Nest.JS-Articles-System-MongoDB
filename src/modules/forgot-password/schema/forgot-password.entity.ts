@@ -7,7 +7,7 @@ export type ForgotPasswordDocument = ForgotPassword & Document
 @Schema({ collection: 'forgot_password' })
 export class ForgotPassword {
     @Prop()
-    id: string;
+    _id: string;
 
     @Prop()
     code: string;

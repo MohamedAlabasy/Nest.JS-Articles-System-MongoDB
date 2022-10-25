@@ -70,15 +70,15 @@ export class UsersController {
         if (_emailActivateData.code.toString().length !== 6) {
             throw new HttpException('the code must be 6 number', HttpStatus.BAD_REQUEST)
         }
-        
-        let data: EmailVerification | User;
+
+        let data: any;
         data = await this.emailVerificationService.checkCode(_emailActivateData)
 
         if (!data) {
             throw new HttpException(`Not send code to user with id = ${_emailActivateData.user}`, HttpStatus.BAD_REQUEST)
-        } else if (_emailActivateData.code != data[0].code) {
+        } else if (_emailActivateData.code != data.code) {
             throw new HttpException('invalid code', HttpStatus.BAD_REQUEST);
-        } else if (new Date() >= data[0].expire_at) {
+        } else if (new Date() >= data.expire_at) {
             // If the code exceeds a certain time and it has not been used in this application for 24 hours
             throw new HttpException('This code has expired', HttpStatus.BAD_REQUEST);
         }

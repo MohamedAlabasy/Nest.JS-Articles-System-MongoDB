@@ -1,31 +1,29 @@
-// import { Injectable } from '@nestjs/common';
-// import { InjectRepository } from '@nestjs/typeorm';
-// import { ForgotPassword } from 'src/database/entities/forgot-password.entity';
-// import { Repository } from 'typeorm';
-// import { ResetPasswordDto } from './dto/reset-password.dto';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
-// @Injectable()
-// export class ForgotPasswordService {
+import { ForgotPassword } from './schema/forgot-password.entity';
+@Injectable()
+export class ForgotPasswordService {
+    constructor(@InjectModel(ForgotPassword.name) private forgotPasswordModel: Model<ForgotPassword>) { }
+    // #=======================================================================================#
+    // #                          send User email code to rest password                        #
+    // #=======================================================================================#
+    async sendEmailCodeToRestPassword(code, expire_at, user): Promise<ForgotPassword> {
+        return this.forgotPasswordModel.create({
+            _id: uuidv4(),
+            code,
+            created_at: new Date(Date.now()),
+            expire_at: new Date(Date.now() + expire_at),
+            user
+        })
+    }
 
-//     constructor(@InjectRepository(ForgotPassword) private forgotPasswordRepository: Repository<ForgotPassword>) { }
-//     // #=======================================================================================#
-//     // #                          send User email code to rest password                        #
-//     // #=======================================================================================#
-//     async sendEmailCodeToRestPassword(code, expire_at, user): Promise<ForgotPassword> {
-//         const data = this.forgotPasswordRepository.create({
-//             code,
-//             created_at: new Date(Date.now()),
-//             expire_at: new Date(Date.now() + expire_at),
-//             user
-//         })
-//         return await this.forgotPasswordRepository.save(data)
-//     }
-
-//     // #=======================================================================================#
-//     // #			                        check code                                         #
-//     // #=======================================================================================#
-//     async checkCode(code: number, userId: number): Promise<ForgotPassword> {
-//         // this.data = await this.emailVerificationRepository.find({relations:['user'],where:{ userId: _resetData.user} })
-//         return await this.forgotPasswordRepository.query(`select * from forgot_password where code = ${code} and userId = ${userId}`)
-//     }
-// }
+    // #=======================================================================================#
+    // #			                        check code                                         #
+    // #=======================================================================================#
+    async checkCode(code: number, user: number): Promise<ForgotPassword> {
+        return await this.forgotPasswordModel.findOne({ code, user })
+    }
+}
