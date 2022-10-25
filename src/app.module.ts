@@ -8,7 +8,7 @@ import { CheckTokensMiddleware } from './middleware/check-tokens.middleware';
 import { EmailVerificationModule } from './modules/email-verification/email-verification.module';
 import { ArticlesModule } from './modules/articles/articles.module';
 // import { LikesModule } from './modules/likes/likes.module';
-// import { CommentsModule } from './modules/comments/comments.module';
+import { CommentsModule } from './modules/comments/comments.module';
 import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
 
 @Module({
@@ -19,7 +19,7 @@ import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.
     EmailVerificationModule,
     ArticlesModule,
     // LikesModule,
-    // CommentsModule,
+    CommentsModule,
     ForgotPasswordModule,
   ]
 })

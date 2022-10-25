@@ -5,6 +5,5 @@ export class UpdateCommentDto {
     @IsNotEmpty()
     readonly comment: string;
 
-    user: number;
-
+    user: string;
 }

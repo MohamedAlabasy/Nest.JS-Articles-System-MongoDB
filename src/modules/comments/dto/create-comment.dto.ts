@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length, IsInt } from "class-validator";
+import { IsNotEmpty, IsString, Length, IsUUID } from "class-validator";
 
 export class CreateCommentDto {
 
@@ -7,9 +7,9 @@ export class CreateCommentDto {
     @IsNotEmpty()
     readonly comment: string;
 
-    @IsInt()
+    @IsUUID()
     @IsNotEmpty()
-    readonly article: number;
+    readonly article: string;
 
-    user: number;
+    user: string;
 }

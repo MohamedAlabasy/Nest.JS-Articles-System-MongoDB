@@ -19,7 +19,7 @@ export class Comment {
     @Prop({ type: String, ref: 'User' })
     user: User;
 
-    @Prop({ type: String, ref: 'User' })
+    @Prop({ type: String, ref: 'Article' })
     article: Article;
 }
 
