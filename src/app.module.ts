@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { mongodb } from './config/mongodb.config';
 import { UsersModule } from './modules/users/users.module';
-import { LoggerMiddleware } from './middleware/logger.middleware';
 import { CheckTokensMiddleware } from './middleware/check-tokens.middleware';
 import { EmailVerificationModule } from './modules/email-verification/email-verification.module';
 import { ArticlesModule } from './modules/articles/articles.module';
@@ -25,7 +24,7 @@ import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(LoggerMiddleware).forRoutes('*')
+      // .apply(LoggerMiddleware).forRoutes('*')
       .apply(CheckTokensMiddleware).exclude(
         { path: 'users/login', method: RequestMethod.POST },
         { path: 'users/register', method: RequestMethod.POST },
