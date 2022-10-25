@@ -7,10 +7,10 @@ Every person who created an article, comment or like can only edit or delete it 
 
 ## To run this project
 
-`Step 1` : To use this project must install [Node.js](https://nodejs.org/en/) and [Mysql](https://www.mysql.com/downloads/) as database Then Download the source code
+`Step 1` : To use this project must install [Node.js](https://nodejs.org/en/) and [Mongodb](https://www.mongodb.com/try/download/community) Then Download the source code
 
 ```
-git clone https://github.com/MohamedAlabasy/Nest.JS-Articles-System.git
+git clone https://github.com/MohamedAlabasy/Nest.JS-Articles-System-MongoDB.git
 ```
 
 `Step 2` : Enter the project file then install package
@@ -25,7 +25,7 @@ npm i
 npm run start:dev
 ```
 
-`Step 4` : Open [postman](https://www.postman.com/downloads/) and import : [API Collation](https://github.com/MohamedAlabasy/Nest.JS-Articles-System/blob/main/api_collection.json) You will find it in the project file.
+`Step 4` : Open [postman](https://www.postman.com/downloads/) and import : [API Collation](https://github.com/MohamedAlabasy/Nest.JS-Articles-System-MongoDB/blob/main/api_collection.json) You will find it in the project file.
 
 <h3 align="center">To help you understand the project</h3>
 
@@ -149,4 +149,4 @@ npm run test:cov
 
 <hr>
 
-Here are the [Command](https://github.com/MohamedAlabasy/Nest.JS-Articles-System/blob/main/command.txt) that were used in the project, You will find it in the project file.
+Here are the [Command](https://github.com/MohamedAlabasy/Nest.JS-Articles-System-MongoDB/blob/main/command.txt) that were used in the project, You will find it in the project file.
