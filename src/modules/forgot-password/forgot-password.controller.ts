@@ -29,7 +29,7 @@ export class ForgotPasswordController {
             }
 
             const registerCode = REGISTER_CODE;
-            data = await this.forgotPasswordService.sendEmailCodeToRestPassword(registerCode, EXPIRE_CODE_TIME, this.data.id)
+            data = await this.forgotPasswordService.sendEmailCodeToRestPassword(registerCode, EXPIRE_CODE_TIME, data.id)
 
             if (data)
                 emailVerification({ email: _emailData.email, name: data.name }, registerCode, true);
@@ -59,7 +59,7 @@ export class ForgotPasswordController {
                 throw new Error(`Not user with this email = ${_resetData.email}`)
             }
 
-            data = await this.forgotPasswordService.checkCode(_resetData.code, this.data.id)
+            data = await this.forgotPasswordService.checkCode(_resetData.code, data.id)
             if (!data[0]) {
                 throw new Error(`No code send to user with this email = ${_resetData.email}`)
             } else if (_resetData.code != data[0].code) {
