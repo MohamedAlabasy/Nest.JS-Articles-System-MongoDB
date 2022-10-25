@@ -112,7 +112,7 @@ npm run start:dev
 ## DataBase ERD
 
 <p align="center">
-   <img src="https://user-images.githubusercontent.com/93389016/192885498-a6b67fc6-d45c-4227-8b59-a07dffa6889a.jpg" alt="Build Status">
+   <img src="https://user-images.githubusercontent.com/93389016/197892917-d9c0067e-5adf-4078-b2c1-6e16f6c79a0e.jpg" alt="Build Status">
 </p>
 
 ### After completing the registration as a new user, you must go to your email to confirm the email through the code sent to you
