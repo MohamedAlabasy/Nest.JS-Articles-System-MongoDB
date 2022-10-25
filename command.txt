@@ -26,3 +26,7 @@ npm i -D @types/jsonwebtoken
 npm i nodemailer
 npm i -D  @types/nodemailer
 
+
+# install mongoose
+npm i @nestjs/mongoose mongoose
+
