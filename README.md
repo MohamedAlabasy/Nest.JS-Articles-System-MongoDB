@@ -34,19 +34,9 @@ npm run start:dev
 ```bash
 ├── src
 │   ├── config => `for app configuration`
+│   │   ├── mongodb.config.ts
 │   │   ├── sendEmail.config.ts
-│   │   ├── token.config.ts
-│   │   └── typeorm.config.ts
-│   │
-│   │
-│   ├── database
-│   │   └── entities => `for database entities`
-│   │         ├── articles.entity.ts
-│   │         ├── comments.entity.ts
-│   │         ├── email-verification.entity.ts
-│   │         ├── forgot-password.entity.ts
-│   │         ├── likes.entity.ts
-│   │         └── users.entity.ts
+│   │   └── token.config.ts
 │   │
 │   │
 │   ├── middleware
@@ -57,35 +47,41 @@ npm run start:dev
 │   ├── models
 │   │   ├── articles => `for handel articles code`
 │   │   │     ├── dto => `for handel data transfer object for articles`
+│   │   │     ├── schema => `for articles schema`
 │   │   │     ├── articles.controller.ts => `for handel articles functions and routes (endpoints)`
 │   │   │     ├── articles.module.ts => `for handel articles Models`
 │   │   │     └── articles.service.ts => `for handel articles database connection and query`
 │   │   │
 │   │   │── comments => `for handel comments code`
 │   │   │     ├── dto
+│   │   │     ├── schema
 │   │   │     ├── articles.controller.ts
 │   │   │     ├── articles.module.ts
 │   │   │     └── articles.service.ts
 │   │   │
 │   │   │── email-verification => `for handel email-verification code`
 │   │   │     ├── dto
+│   │   │     ├── schema
 │   │   │     ├── articles.module.ts
 │   │   │     └── articles.service.ts
 │   │   │
 │   │   │── forgot-password => `for handel forgot-password code`
 │   │   │     ├── dto
+│   │   │     ├── schema
 │   │   │     ├── articles.controller.ts
 │   │   │     ├── articles.module.ts
 │   │   │     └── articles.service.ts
 │   │   │
 │   │   │── likes => `for handel likes code`
 │   │   │     ├── dto
+│   │   │     ├── schema
 │   │   │     ├── articles.controller.ts
 │   │   │     ├── articles.module.ts
 │   │   │     └── articles.service.ts
 │   │   │
 │   │   └── users => `for handel users code`
 │   │         ├── dto
+│   │         ├── schema
 │   │         ├── articles.controller.ts
 │   │         ├── articles.module.ts
 │   │         └── articles.service.ts

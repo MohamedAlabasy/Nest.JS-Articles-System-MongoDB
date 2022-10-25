@@ -14,7 +14,6 @@ import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.
 @Module({
   imports: [
     MongooseModule.forRoot(mongodb),
-
     UsersModule,
     EmailVerificationModule,
     ArticlesModule,
