@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { EmailVerification } from 'src/database/entities/email-verification.entity';
-import { Users } from 'src/database/entities/users.entity';
+import { User, UserSchema } from './schema/user.schema';
+import { MongooseModule } from '@nestjs/mongoose'
 import { EmailVerificationService } from '../email-verification/email-verification.service';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { EmailVerification, EmailVerificationSchema } from '../email-verification/schema/email-verification.schema';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Users, EmailVerification])],
-  exports: [TypeOrmModule],
-
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: EmailVerification.name, schema: EmailVerificationSchema }])
+  ],
   controllers: [UsersController],
-  providers: [UsersService,EmailVerificationService]
+  providers: [UsersService, EmailVerificationService]
 })
 export class UsersModule { }

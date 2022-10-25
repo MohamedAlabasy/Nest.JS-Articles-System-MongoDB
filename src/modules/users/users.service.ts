@@ -1,69 +1,62 @@
 import { Injectable } from '@nestjs/common';
 
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { FilterQuery, Model } from 'mongoose';
 
-import { Users } from 'src/database/entities/users.entity';
+
+import { User } from './schema/user.schema';
 import { CreateUsersDto } from './dto/create-users.dto';
 import { LoginDto } from './dto/login.dto';
 
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(Users) private usersRepository: Repository<Users>) { }
+    constructor(@InjectModel(User.name) private userModel: Model<User>) { }
 
     // #=======================================================================================#
     // #			                         create new user                                   #
     // #=======================================================================================#
-    async createNewUser(_userData: CreateUsersDto): Promise<Users> {
-        const data = this.usersRepository.create({
+    async createNewUser(_userData: CreateUsersDto): Promise<User> {
+        return this.userModel.create({
+            _id: (Math.random() * 1000).toString(),
             name: _userData.name,
             email: _userData.email,
             password: _userData.password,
             is_verification: false,
-        });
-        return await this.usersRepository.save(data);
+        })
     }
     // #=======================================================================================#
     // #			                    activate user account                                  #
     // #=======================================================================================#
-    async activateUserAccount(_userID: number) {
-        return await this.usersRepository.update({ id: _userID }, { is_verification: true })
+    async activateUserAccount(_userID: number): Promise<User> {
+        return await this.userModel.findByIdAndUpdate({ _id: _userID }, { is_verification: true })
     }
 
     // #=======================================================================================#
     // #			                            login                                          #
     // #=======================================================================================#
-    async login(_userData: LoginDto): Promise<Users> {
-        return await this.usersRepository.findOne({
-            where: { email: _userData.email }, select: {
-                id: true,
-                name: true,
-                email: true,
-                is_verification: true,
-                password: true
-            }
-        });
+    async login(_userData: LoginDto): Promise<User> {
+        return await this.userModel.findOne({ email: _userData.email }).select('+password -__v')
     }
 
     // #=======================================================================================#
     // #                         get User by email for forgot password                         #
     // #=======================================================================================#
-    async getUserByEmail(email: string): Promise<Users> {
-        return await this.usersRepository.findOneBy({ email });
+    async getUserByEmail(email: string): Promise<User> {
+        return await this.userModel.findOne({ email });
     }
 
     // #=======================================================================================#
     // #                                  reset User password                                  #
     // #=======================================================================================#
-    async resetUserPassword(id: number, password: string) {
-        return await this.usersRepository.update({ id }, { password })
+    async resetUserPassword(id: string, password: string): Promise<User> {
+        return await this.userModel.findByIdAndUpdate({ _id: id }, { password })
     }
 
     // #=======================================================================================#
     // #                                     get User by id                                    #
     // #=======================================================================================#
-    async getUserById(id: number): Promise<Users> {
-        return await this.usersRepository.findOneBy({ id });
+    async getUserById(_id: string): Promise<User> {
+        return await this.userModel.findOne({ _id });
     }
 }

@@ -1,15 +1,13 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ForgotPassword } from 'src/database/entities/forgot-password.entity';
-import { Users } from 'src/database/entities/users.entity';
-import { UsersService } from '../users/users.service';
-import { ForgotPasswordController } from './forgot-password.controller';
-import { ForgotPasswordService } from './forgot-password.service';
+// import { Module } from '@nestjs/common';
+// import { MongooseModule } from '@nestjs/mongoose';
+// import { UsersService } from '../users/users.service';
+// import { ForgotPasswordController } from './forgot-password.controller';
+// import { ForgotPasswordService } from './forgot-password.service';
+// import { ForgotPassword, ForgotPasswordSchema } from './schema/forgot-password.entity';
 
-@Module({
-  imports: [TypeOrmModule.forFeature([ForgotPassword, Users])],
-  exports: [TypeOrmModule],
-  controllers: [ForgotPasswordController],
-  providers: [ForgotPasswordService, UsersService]
-})
-export class ForgotPasswordModule { }
+// @Module({
+//   imports: [MongooseModule.forFeature([{ name: ForgotPassword.name, schema: ForgotPasswordSchema }])],
+//   controllers: [ForgotPasswordController],
+//   providers: [ForgotPasswordService, UsersService]
+// })
+// export class ForgotPasswordModule { }
