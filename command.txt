@@ -1,0 +1,28 @@
+user (-D) for (--save-dev)
+
+# create the project
+next new nest.js-articles-system
+
+# generate module
+nest g mo moduleName
+
+# generate controller
+nest g co controllerName 
+
+# generate service
+nest g s serviceName 
+
+# install bcryptjs
+npm i bcryptjs --save
+npm i -D @types/bcryptjs
+
+
+# install jsonwebtoken 
+npm i jsonwebtoken --save
+npm i -D @types/jsonwebtoken
+
+
+# install nodemailer
+npm i nodemailer
+npm i -D  @types/nodemailer
+
