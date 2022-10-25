@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
+
 import { EmailVerification } from './schema/email-verification.schema';
 import { CreateEmailActivateDto } from './dto/create-email-activate.dto';
 
@@ -14,7 +16,7 @@ export class EmailVerificationService {
     // #=======================================================================================#
     async createNewEmailVerification(code, expire_at, user): Promise<EmailVerification> {
         return this.emailVerificationModel.create({
-            _id: (Math.random() * 1000).toString(),
+            _id: uuidv4(),
             code,
             created_at: new Date(Date.now()),
             expire_at: new Date(Date.now() + expire_at),
@@ -26,9 +28,6 @@ export class EmailVerificationService {
     // #			                        check code                                         #
     // #=======================================================================================#
     async checkCode(_emailActivateData: CreateEmailActivateDto): Promise<EmailVerification> {
-
-        // this.data = await this.emailVerificationRepository.find({relations:['user'],where:{ user: _emailActivateData.user} })
-        // return await this.emailVerificationModel.query(`select * from email_verification where code = ${_emailActivateData.code} and userId = ${_emailActivateData.user}`)
         return await this.emailVerificationModel.findOne({
             code: _emailActivateData.code,
             user: _emailActivateData.user

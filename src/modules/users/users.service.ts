@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-
+import { v4 as uuidv4 } from 'uuid';
 
 import { User } from './schema/user.schema';
 import { CreateUsersDto } from './dto/create-users.dto';
@@ -19,7 +19,7 @@ export class UsersService {
     // #=======================================================================================#
     async createNewUser(_userData: CreateUsersDto): Promise<User> {
         return this.userModel.create({
-            _id: (Math.random() * 1000).toString(),
+            _id: uuidv4(),
             name: _userData.name,
             email: _userData.email,
             password: _userData.password,
