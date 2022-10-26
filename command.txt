@@ -31,6 +31,11 @@ npm i -D  @types/nodemailer
 # install mongoose
 npm i @nestjs/mongoose mongoose
 
+
 # install uuid
 npm i uuid
+
+
+# install casl
+npm i @casl/ability
 

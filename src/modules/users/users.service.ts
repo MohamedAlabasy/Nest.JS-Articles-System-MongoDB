@@ -23,6 +23,7 @@ export class UsersService {
             email: _userData.email,
             password: _userData.password,
             is_verification: false,
+            is_admin: false
         })
     }
     // #=======================================================================================#
@@ -58,5 +59,12 @@ export class UsersService {
     // #=======================================================================================#
     async getUserById(_id: string): Promise<User> {
         return await this.userModel.findOne({ _id }).select(SELECT);
+    }
+
+    // #=======================================================================================#
+    // #                                      get all Users                                    #
+    // #=======================================================================================#
+    async getAllUsers(): Promise<User[]> {
+        return await this.userModel.find().select(SELECT);
     }
 }

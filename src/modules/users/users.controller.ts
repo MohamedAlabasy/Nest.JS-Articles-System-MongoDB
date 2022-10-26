@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException, Get, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
@@ -56,6 +56,7 @@ export class UsersController {
                 _id: userData._id,
                 name: userData.name,
                 email: userData.email,
+                is_admin: userData.is_admin,
                 is_verification: userData.is_verification,
             }
             // data: userData
@@ -121,6 +122,22 @@ export class UsersController {
                 email: userData.email,
                 is_verification: userData.is_verification,
             }
+        }
+    }
+
+    // #=======================================================================================#
+    // #                                      get all Users                                    #
+    // #=======================================================================================#
+    // this end point for admin only
+    @Get()
+    @HttpCode(HttpStatus.OK)
+    async getAllUsers() {
+        const data = await this.usersService.getAllUsers()
+        if (data && data.length == 0) throw new NotFoundException('No articles to show')
+
+        return {
+            count: data.length,
+            data: data
         }
     }
 }

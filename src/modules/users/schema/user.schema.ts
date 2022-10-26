@@ -23,6 +23,9 @@ export class User {
     email: string;
 
     @Prop({ default: false })
+    is_admin: boolean;
+
+    @Prop({ default: false })
     is_verification: boolean;
 
     @Prop({ select: false })
