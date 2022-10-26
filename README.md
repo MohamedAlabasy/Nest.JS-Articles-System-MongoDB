@@ -33,6 +33,11 @@ npm run start:dev
 
 ```bash
 ├── src
+│   ├── ability => `for casl`
+│   │      ├── ability.factory.ts => `for handel what user can and cannot do`
+│   │      └── ability.module.ts
+│   │
+│   │
 │   ├── config => `for app configuration`
 │   │      ├── mongodb.config.ts
 │   │      ├── sendEmail.config.ts
