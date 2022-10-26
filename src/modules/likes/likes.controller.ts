@@ -1,10 +1,12 @@
-import { Controller, Post, Delete, Headers, Get, Param, UsePipes, ValidationPipe, Body, HttpStatus, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
+import { Controller, Post, Delete, UseFilters, Headers, Get, Param, UsePipes, ValidationPipe, Body, HttpStatus, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
 import { ArticlesService } from '../articles/articles.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { LikesService } from './likes.service';
+import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
 @Controller('likes')
+@UseFilters(HttpExceptionFilter)
 export class LikesController {
     constructor(
         private readonly likesService: LikesService,

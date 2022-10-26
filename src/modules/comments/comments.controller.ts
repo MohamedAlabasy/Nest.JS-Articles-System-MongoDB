@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Headers, Patch, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, HttpCode, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
+import { Controller, Get, Post, UseFilters, Headers, Patch, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, HttpCode, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
 import { ArticlesService } from '../articles/articles.service';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto copy';
+import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
 @Controller('comments')
+@UseFilters(HttpExceptionFilter)
 export class CommentsController {
     constructor(
         private readonly commentService: CommentsService,

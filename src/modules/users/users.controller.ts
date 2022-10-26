@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException } from '@nestjs/common';
+import { Body, Controller, UseFilters, HttpCode, HttpStatus, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
@@ -13,8 +13,10 @@ import { CreateEmailActivateDto } from '../email-verification/dto/create-email-a
 import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
 import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
 import { User } from './schema/user.schema';
+import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
 @Controller('users')
+@UseFilters(HttpExceptionFilter)
 export class UsersController {
     constructor(
         private readonly usersService: UsersService,

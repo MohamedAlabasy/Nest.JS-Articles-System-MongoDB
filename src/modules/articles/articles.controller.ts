@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Patch, Headers, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, ConflictException } from '@nestjs/common';
+import { Controller, Get, Post, UseFilters, Patch, Headers, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, ConflictException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { GET_ID_FROM_TOKEN } from '../../utilities/get-id-from-token';
+import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
 @Controller('articles')
+@UseFilters(HttpExceptionFilter)
 export class ArticlesController {
     constructor(
         private readonly articlesService: ArticlesService,

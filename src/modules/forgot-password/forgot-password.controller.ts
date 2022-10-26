@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, UsePipes, ValidationPipe, HttpCode, NotFoundException, BadGatewayException, BadRequestException } from '@nestjs/common';
+import { Body, Controller,UseFilters, HttpStatus, Post, UsePipes, ValidationPipe, HttpCode, NotFoundException, BadGatewayException, BadRequestException } from '@nestjs/common';
 import { emailVerification } from '../../utilities/email/emailVerification'
 import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
 import { CheckEmailDto } from './dto/check-email.dto';
@@ -7,8 +7,10 @@ import { UsersService } from '../users/users.service';
 import { ForgotPasswordService } from './forgot-password.service';
 import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
 import { HashPasswordPipe } from 'src/pipes/hash-password.pipe';
+import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
 @Controller('forgotPassword')
+@UseFilters(HttpExceptionFilter)
 export class ForgotPasswordController {
     constructor(
         private readonly forgotPasswordService: ForgotPasswordService,
