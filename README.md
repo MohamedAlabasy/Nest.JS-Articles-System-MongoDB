@@ -34,14 +34,14 @@ npm run start:dev
 ```bash
 ├── src
 │   ├── config => `for app configuration`
-│   │   ├── mongodb.config.ts
-│   │   ├── sendEmail.config.ts
-│   │   └── token.config.ts
+│   │      ├── mongodb.config.ts
+│   │      ├── sendEmail.config.ts
+│   │      └── token.config.ts
 │   │
 │   │
 │   ├── middleware
-│   │   ├── check-tokens.middleware.ts => `for check tokens on all requests`
-│   │   └── logger.middleware.middleware.ts => `for log url, method and statue of requests`
+│   │       ├── check-tokens.middleware.ts => `for check tokens on all requests`
+│   │       └── logger.middleware.middleware.ts => `for log url, method and statue of requests`
 │   │
 │   │
 │   ├── models
@@ -52,52 +52,52 @@ npm run start:dev
 │   │   │     ├── articles.module.ts => `for handel articles Models`
 │   │   │     └── articles.service.ts => `for handel articles database connection and query`
 │   │   │
-│   │   │── comments => `for handel comments code`
+│   │   ├── comments => `for handel comments code`
 │   │   │     ├── dto
 │   │   │     ├── schema
-│   │   │     ├── articles.controller.ts
-│   │   │     ├── articles.module.ts
-│   │   │     └── articles.service.ts
+│   │   │     ├── comments.controller.ts
+│   │   │     ├── comments.module.ts
+│   │   │     └── comments.service.ts
 │   │   │
-│   │   │── email-verification => `for handel email-verification code`
+│   │   ├── email-verification => `for handel email-verification code`
 │   │   │     ├── dto
 │   │   │     ├── schema
-│   │   │     ├── articles.module.ts
-│   │   │     └── articles.service.ts
+│   │   │     ├── email-verification.module.ts
+│   │   │     └── email-verification.service.ts
 │   │   │
-│   │   │── forgot-password => `for handel forgot-password code`
+│   │   ├── forgot-password => `for handel forgot-password code`
 │   │   │     ├── dto
 │   │   │     ├── schema
-│   │   │     ├── articles.controller.ts
-│   │   │     ├── articles.module.ts
-│   │   │     └── articles.service.ts
+│   │   │     ├── forgot-password.controller.ts
+│   │   │     ├── forgot-password.module.ts
+│   │   │     └── forgot-password.service.ts
 │   │   │
-│   │   │── likes => `for handel likes code`
+│   │   ├── likes => `for handel likes code`
 │   │   │     ├── dto
 │   │   │     ├── schema
-│   │   │     ├── articles.controller.ts
-│   │   │     ├── articles.module.ts
-│   │   │     └── articles.service.ts
+│   │   │     ├── likes.controller.ts
+│   │   │     ├── likes.module.ts
+│   │   │     └── likes.service.ts
 │   │   │
 │   │   └── users => `for handel users code`
 │   │         ├── dto
 │   │         ├── schema
-│   │         ├── articles.controller.ts
-│   │         ├── articles.module.ts
-│   │         └── articles.service.ts
+│   │         ├── users.controller.ts
+│   │         ├── users.module.ts
+│   │         └── users.service.ts
 │   │
 │   │
 │   ├── pipes => `for handel custom pipe`
-│   │   ├── email-lower-case.pipe.ts
-│   │   ├── hash-password.pipe.ts
-│   │   └── register.pipe.ts
+│   │     ├── email-lower-case.pipe.ts
+│   │     ├── hash-password.pipe.ts
+│   │     └── register.pipe.ts
 │   │
 │   │
 │   ├── utilities
 │   │   ├── email
-│   │   │   │── emailVerification.ts => `for send email message`
-│   │   │   └── emailMessagesDesign.ts => `for email messages design ( HTML & CSS )`
-│   │   │── common.ts => `for common variables`
+│   │   │     ├── emailVerification.ts => `for send email message`
+│   │   │     └── emailMessagesDesign.ts => `for email messages design ( HTML & CSS )`
+│   │   ├── common.ts => `for common variables`
 │   │   └── get-id-from-token.ts => `to get id from token`
 │   │
 │   │
