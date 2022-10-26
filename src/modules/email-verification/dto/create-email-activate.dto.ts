@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsInt, IsString } from "class-validator";
+import { IsNotEmpty, IsInt, IsUUID } from "class-validator";
 
 export class CreateEmailActivateDto {
 
@@ -6,7 +6,7 @@ export class CreateEmailActivateDto {
     @IsNotEmpty()
     readonly code: number;
 
-    @IsString()
+    @IsUUID()
     @IsNotEmpty()
-    readonly user: number;
+    readonly user: string;
 }

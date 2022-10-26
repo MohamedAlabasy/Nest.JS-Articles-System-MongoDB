@@ -14,7 +14,7 @@ export class LikesService {
     // #=======================================================================================#
     // #			                      check like article                                   #
     // #=======================================================================================#
-    async checkLikeArticle(user: string, article: string): Promise<Like[]> {
+    async checkLikeArticle(user: string, article: string): Promise<Like> {
         return await this.likeModel.findOne({ user, article })
     }
 
@@ -29,6 +29,7 @@ export class LikesService {
             user: _likeData.user,
         });
     }
+    
     // #=======================================================================================#
     // #			                        unlike article                                     #
     // #=======================================================================================#

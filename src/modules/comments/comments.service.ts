@@ -34,7 +34,7 @@ export class CommentsService {
     // #=======================================================================================#
     // #			                        update comment                                     #
     // #=======================================================================================#
-    async updateComment(_id: string, _commentData: UpdateCommentDto) {
+    async updateComment(_id: string, _commentData: UpdateCommentDto): Promise<Comment> {
         return await this.commentsModel.findByIdAndUpdate({ _id }, {
             comment: _commentData.comment,
         }, { new: true }).populate({ path: 'user article', select: `${SELECT} -user` }).select(SELECT)
@@ -42,13 +42,13 @@ export class CommentsService {
     // #=======================================================================================#
     // #			                  get comment by id on article                             #
     // #=======================================================================================#
-    async getCommentById(_id: string) {
+    async getCommentById(_id: string): Promise<Comment> {
         return await this.commentsModel.findById(_id).populate({ path: 'user article', select: `${SELECT} -user` }).select(SELECT)
     }
     // #=======================================================================================#
     // #			                        delete comment                                     #
     // #=======================================================================================#
-    async deleteComment(_id: string) {
+    async deleteComment(_id: string): Promise<Comment> {
         return await this.commentsModel.findByIdAndDelete({ _id })
     }
 }

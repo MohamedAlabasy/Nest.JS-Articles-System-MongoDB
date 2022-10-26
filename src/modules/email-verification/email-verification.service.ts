@@ -8,7 +8,6 @@ import { CreateEmailActivateDto } from './dto/create-email-activate.dto';
 
 @Injectable()
 export class EmailVerificationService {
-
     constructor(@InjectModel(EmailVerification.name) private emailVerificationModel: Model<EmailVerification>) { }
 
     // #=======================================================================================#

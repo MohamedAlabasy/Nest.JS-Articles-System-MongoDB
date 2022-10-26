@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
@@ -13,7 +13,6 @@ import { CreateEmailActivateDto } from '../email-verification/dto/create-email-a
 import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
 import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
 import { User } from './schema/user.schema';
-import { EmailVerification } from '../email-verification/schema/email-verification.schema';
 
 @Controller('users')
 export class UsersController {
@@ -30,9 +29,8 @@ export class UsersController {
     @UsePipes(ValidationPipe)
     async createNewUser(@Body(RegisterPipe) _userData: CreateUsersDto) {
         let userData: User;
-
         userData = await this.usersService.getUserByEmail(_userData.email)
-        if (userData) throw new HttpException('this email already used', HttpStatus.CONFLICT)
+        if (userData) throw new ConflictException('this email already used')
 
         userData = await this.usersService.createNewUser(_userData)
         // use create then wanna send email code
@@ -42,13 +40,16 @@ export class UsersController {
             const storeEmailCode = await this.emailVerificationService.createNewEmailVerification(registerCode, EXPIRE_CODE_TIME, userData._id)
 
             if (storeEmailCode) emailVerification(_userData, registerCode);
-            else throw new HttpException('can\'t send email code to this email', HttpStatus.BAD_REQUEST)
+            else throw new BadGatewayException('can\'t send email code to this email')
+        } else {
+            throw new BadRequestException('can\'t create user, please try again')
         }
 
         // to remove password from object before retune data to user 
-        delete userData.password
+        delete userData.password // why it isn't work? 
+
         return {
-            message: `The code has been sent to your email = ${_userData.email}`,
+            message: `The code has been sent to your email = ${userData.email}`,
             data: {
                 _id: userData._id,
                 name: userData.name,
@@ -63,29 +64,28 @@ export class UsersController {
     // #			                        activate email                                     #
     // #=======================================================================================#
     @Post('activate')
-    @HttpCode(HttpStatus.CREATED)
+    @HttpCode(HttpStatus.OK)
     @UsePipes(ValidationPipe)
     async activateEmail(@Body() _emailActivateData: CreateEmailActivateDto) {
-
         if (_emailActivateData.code.toString().length !== 6) {
-            throw new HttpException('the code must be 6 number', HttpStatus.BAD_REQUEST)
+            throw new BadRequestException('the code must be 6 number')
         }
 
         let data: any;
         data = await this.emailVerificationService.checkCode(_emailActivateData)
 
         if (!data) {
-            throw new HttpException(`Not send code to user with id = ${_emailActivateData.user}`, HttpStatus.BAD_REQUEST)
+            throw new BadRequestException(`Not send code to user with id = ${_emailActivateData.user}`)
         } else if (_emailActivateData.code != data.code) {
-            throw new HttpException('invalid code', HttpStatus.BAD_REQUEST);
+            throw new BadRequestException('invalid code');
         } else if (new Date() >= data.expire_at) {
             // If the code exceeds a certain time and it has not been used in this application for 24 hours
-            throw new HttpException('This code has expired', HttpStatus.BAD_REQUEST);
+            throw new BadRequestException('This code has expired');
         }
 
         // update user data is_verification = true
         data = await this.usersService.activateUserAccount(_emailActivateData.user)
-        if (!data) throw new HttpException('can\'t activate this email', HttpStatus.BAD_REQUEST);
+        if (!data) throw new BadRequestException('can\'t activate this email');
 
         return { message: 'email activation successfully' }
     }
@@ -93,18 +93,15 @@ export class UsersController {
     // #			                            login                                          #
     // #=======================================================================================#
     @Post('login')
-    @UsePipes(ValidationPipe)
     @HttpCode(HttpStatus.OK)
+    @UsePipes(ValidationPipe)
     async login(@Body(EmailLowerCasePipe) _userData: LoginDto) {
         let userData: User;
-
         userData = await this.usersService.login(_userData);
-        if (!userData) throw new HttpException(`there is no user with this email = ${_userData.email}`, HttpStatus.UNAUTHORIZED)
-
+        if (!userData) throw new UnauthorizedException(`there is no user with this email = ${_userData.email}`)
 
         const IsValidPassword: boolean = bcrypt.compareSync(_userData.password, userData.password);
-        if (!IsValidPassword) throw new HttpException('invalid password', HttpStatus.UNAUTHORIZED)
-
+        if (!IsValidPassword) throw new UnauthorizedException('invalid password')
 
         // to add token
         const token: string = 'Bearer ' + jwt.sign({ _id: userData._id, is_verification: userData.is_verification }, ACCESS_TOKEN_SECRET as string, {
@@ -112,7 +109,7 @@ export class UsersController {
         });
 
         // to remove password from object before retune data to user 
-        delete userData.password
+        delete userData.password // why it isn't work? 
 
         return {
             token,

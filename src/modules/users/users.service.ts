@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
@@ -29,8 +28,8 @@ export class UsersService {
     // #=======================================================================================#
     // #			                    activate user account                                  #
     // #=======================================================================================#
-    async activateUserAccount(_userID: number): Promise<User> {
-        return await this.userModel.findByIdAndUpdate({ _id: _userID }, { is_verification: true }, { new: true })
+    async activateUserAccount(_id: string): Promise<User> {
+        return await this.userModel.findByIdAndUpdate({ _id }, { is_verification: true }, { new: true })
     }
 
     // #=======================================================================================#
@@ -50,8 +49,8 @@ export class UsersService {
     // #=======================================================================================#
     // #                                  reset User password                                  #
     // #=======================================================================================#
-    async resetUserPassword(id: string, password: string): Promise<User> {
-        return await this.userModel.findByIdAndUpdate({ _id: id }, { password }).select(SELECT);
+    async resetUserPassword(_id: string, password: string): Promise<User> {
+        return await this.userModel.findByIdAndUpdate({ _id }, { password }).select(SELECT);
     }
 
     // #=======================================================================================#

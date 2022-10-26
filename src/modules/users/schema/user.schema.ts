@@ -25,7 +25,7 @@ export class User {
     @Prop({ default: false })
     is_verification: boolean;
 
-    @Prop({ type: String, select: false })
+    @Prop({ select: false })
     password: string;
 }
 

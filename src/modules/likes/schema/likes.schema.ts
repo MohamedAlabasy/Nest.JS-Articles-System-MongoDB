@@ -15,11 +15,10 @@ export class Like {
 
     @Prop({
         type: String,
-        enum: ['like', 'smile', 'love', 'angry'],
-        default: 'like'
-
-        // enum: EmojiType,
-        // default: EmojiType.LIKE,
+        // enum: ['like', 'smile', 'love', 'angry'],
+        // default: 'like',
+        enum: EmojiType,
+        default: EmojiType.LIKE,
     })
     type: string;
 
