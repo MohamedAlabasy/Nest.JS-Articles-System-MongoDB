@@ -22,3 +22,8 @@ export const SELECT: string = '-__v';
 
 // remove from database return object 
 export const BASE_URL: string = 'http://127.0.0.1:3000';
+
+// change consol color
+export const BASE_COLOR: string = '%s\x1b[0m';
+export const RED_COLOR: string = '\x1b[31m'
+export const MAGENTA_COLOR: string = '\x1b[36m'

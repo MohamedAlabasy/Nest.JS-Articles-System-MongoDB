@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { BASE_URL } from 'src/utilities/common';
+import { BASE_URL, RED_COLOR, BASE_COLOR } from 'src/utilities/common';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -11,9 +11,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
         const status = exception.getStatus();
 
         // to log an error on the console
-        console.log('Exception Error URL :', BASE_URL + request.url);
-        console.log('Exception Error status :', status);
-        console.log('Exception Error :', exception.message);
+        console.log(RED_COLOR + BASE_COLOR, '\nSTART OF Exception');
+        console.log('url :', BASE_URL + request.url);
+        console.log('status:', status);
+        console.log('message:', exception.message);
+        console.log(RED_COLOR + BASE_COLOR, 'END OF Exception');
 
         //         console.log(`{
         //     Exception Error URL : ${BASE_URL + request.url}
