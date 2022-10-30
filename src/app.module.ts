@@ -9,7 +9,7 @@ import { ArticlesModule } from './modules/articles/articles.module';
 import { LikesModule } from './modules/likes/likes.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
-import { AbilityModule } from './ability/ability.module';
+import { CaslModule } from './casl/casl.module';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { AbilityModule } from './ability/ability.module';
     LikesModule,
     CommentsModule,
     ForgotPasswordModule,
-    AbilityModule
+    CaslModule
   ]
 })
 export class AppModule implements NestModule {

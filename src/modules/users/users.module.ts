@@ -5,13 +5,13 @@ import { EmailVerificationService } from '../email-verification/email-verificati
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { EmailVerification, EmailVerificationSchema } from '../email-verification/schema/email-verification.schema';
-import { AbilityModule } from 'src/ability/ability.module';
+import { CaslModule } from 'src/casl/casl.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: EmailVerification.name, schema: EmailVerificationSchema }]),
-    AbilityModule
+    CaslModule
   ],
   controllers: [UsersController],
   providers: [UsersService, EmailVerificationService]

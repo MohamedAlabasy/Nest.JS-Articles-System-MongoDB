@@ -13,8 +13,10 @@ import { CreateEmailActivateDto } from '../email-verification/dto/create-email-a
 import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
 import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
 import { User } from './schema/user.schema';
-import { AbilityFactory, Action } from 'src/ability/ability.factory';
+// import { AbilityFactory, Action } from 'src/ability/ability.factory';
 import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
+import { Action } from 'src/casl/action.enum';
 // import { ForbiddenError } from '@casl/ability';
 // import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
@@ -24,7 +26,8 @@ export class UsersController {
     constructor(
         private readonly usersService: UsersService,
         private readonly emailVerificationService: EmailVerificationService,
-        private readonly abilityFactory: AbilityFactory
+        // private readonly abilityFactory: AbilityFactory,
+        private readonly caslAbilityFactory: CaslAbilityFactory
     ) { }
 
     // #=======================================================================================#
@@ -141,10 +144,11 @@ export class UsersController {
         data = await this.usersService.getUserById(userID)
         if (!data) throw new NotFoundException('user not found')
 
-        const ability = this.abilityFactory.defineAbility(data)
-        if (!ability.can(Action.Read, User)) throw new ForbiddenException('you isn\'t an admin')
-        // ForbiddenError.from(ability).throwUnlessCan(Action.Read, User)
-
+        const ability = this.caslAbilityFactory.createForUser(data);
+        if (!ability.can(Action.Read, User)) { //send User to compare
+            // "user" has read access to everything
+            throw new ForbiddenException('you isn\'t an admin')
+        }
 
         data = await this.usersService.getAllUsers()
         if (data && data.length == 0) throw new NotFoundException('no users to show')
