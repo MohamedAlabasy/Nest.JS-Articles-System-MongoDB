@@ -14,6 +14,6 @@ import { CaslModule } from 'src/casl/casl.module';
     CaslModule
   ],
   controllers: [UsersController],
-  providers: [UsersService, EmailVerificationService]
+  providers: [UsersService, EmailVerificationService,]
 })
 export class UsersModule { }

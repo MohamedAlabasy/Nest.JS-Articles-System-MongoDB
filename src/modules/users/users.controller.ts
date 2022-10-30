@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Headers, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException, Get, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Headers, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException, Get, NotFoundException, ForbiddenException, UseGuards } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
@@ -13,10 +13,12 @@ import { CreateEmailActivateDto } from '../email-verification/dto/create-email-a
 import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
 import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
 import { User } from './schema/user.schema';
-// import { AbilityFactory, Action } from 'src/ability/ability.factory';
 import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
 import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
-import { Action } from 'src/casl/action.enum';
+import { PoliciesGuard } from 'src/policies-guard/policies.guard';
+import { CheckPolicies } from 'src/policies-guard/check-policies.decorator';
+import { ReadArticlePolicyHandler } from 'src/policies-guard/policy-handler/Policies/read-article-policy-handler';
+
 // import { ForbiddenError } from '@casl/ability';
 // import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
@@ -136,6 +138,8 @@ export class UsersController {
     // #                    get all Users => this end point for admin only                     #
     // #=======================================================================================#
     @Get()
+    @UseGuards(PoliciesGuard)
+    @CheckPolicies(new ReadArticlePolicyHandler())
     @HttpCode(HttpStatus.OK)
     async getAllUsers(@Headers() _headers) {
         let data: any;
@@ -144,11 +148,11 @@ export class UsersController {
         data = await this.usersService.getUserById(userID)
         if (!data) throw new NotFoundException('user not found')
 
-        const ability = this.caslAbilityFactory.createForUser(data);
-        if (!ability.can(Action.Read, User)) { //send User to compare
-            // "user" has read access to everything
-            throw new ForbiddenException('you isn\'t an admin')
-        }
+        // const ability = this.caslAbilityFactory.createForUser(data);
+        // if (!ability.can(Action.Read, User)) { //send User to compare
+        //     // "user" has read access to everything
+        //     throw new ForbiddenException('you isn\'t an admin')
+        // }
 
         data = await this.usersService.getAllUsers()
         if (data && data.length == 0) throw new NotFoundException('no users to show')

@@ -9,7 +9,10 @@ import { ArticlesModule } from './modules/articles/articles.module';
 import { LikesModule } from './modules/likes/likes.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
+
 import { CaslModule } from './casl/casl.module';
+import { APP_GUARD } from '@nestjs/core';
+import { PoliciesGuard } from './policies-guard/policies.guard';
 
 @Module({
   imports: [
@@ -20,8 +23,14 @@ import { CaslModule } from './casl/casl.module';
     LikesModule,
     CommentsModule,
     ForgotPasswordModule,
-    CaslModule
-  ]
+    CaslModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: PoliciesGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

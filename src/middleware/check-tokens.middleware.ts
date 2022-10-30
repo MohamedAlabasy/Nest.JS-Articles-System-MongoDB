@@ -17,7 +17,6 @@ export class CheckTokensMiddleware implements NestMiddleware {
       if (error) throw new UnauthorizedException('invalid token'); //No. (498 invalid token) is an unofficial code used by a proprietary product. 
 
       if (!decoded.is_verification) throw new ForbiddenException('You must verification email first')
-
       next();
     });
   }
