@@ -18,11 +18,6 @@ npm i bcryptjs --save
 npm i -D @types/bcryptjs
 
 
-# install jsonwebtoken 
-npm i jsonwebtoken --save
-npm i -D @types/jsonwebtoken
-
-
 # install nodemailer
 npm i nodemailer
 npm i -D  @types/nodemailer
@@ -38,4 +33,14 @@ npm i uuid
 
 # install casl
 npm i @casl/ability
+
+
+# install passport
+$ npm install --save @nestjs/passport passport passport-local
+$ npm install --save-dev @types/passport-local
+
+
+# install jwt
+$ npm install --save @nestjs/jwt passport-jwt
+$ npm install --save-dev @types/passport-jwt
 
