@@ -33,14 +33,12 @@ export class LikesController {
         if (!data) throw new BadRequestException('can\'t like this article please try again');
         else await this.articlesService.updateNumberOfLikes(data.article, articleData.likes + 1)
 
-        return {
-            data: {
-                _id: data._id,
-                type: data.type,
-                user: data.user,
-                article: data.article
-            }
-        }
+        // to remove __v from object before retune data to user 
+        data = (data as any).toObject();
+        delete data['__v']
+
+        return { data }
+
     }
     // #=======================================================================================#
     // #			                        unlike article                                     #

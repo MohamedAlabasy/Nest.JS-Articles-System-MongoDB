@@ -29,14 +29,11 @@ export class CommentsController {
         data = await this.commentService.createComment(_commentData)
         if (data.affected === 0) throw new BadRequestException(`can't create comment on this articles with this id = ${_commentData.article}`)
 
-        return {
-            data: {
-                _id: data._id,
-                comment: data.comment,
-                user: data.user,
-                article: data.article
-            }
-        }
+        // to remove __v from object before retune data to user 
+        data = (data as any).toObject();
+        delete data['__v']
+
+        return { data }
     }
     // #=======================================================================================#
     // #			                     get all comments on articles                          #

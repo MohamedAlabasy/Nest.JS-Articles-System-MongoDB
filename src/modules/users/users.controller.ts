@@ -14,7 +14,7 @@ import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
 import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
 import { User } from './schema/user.schema';
 import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
-import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
+// import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { CheckPolicies } from 'src/policies-guard/check-policies.decorator';
 import { ReadArticlePolicyHandler } from 'src/policies-guard/policy-handler/Policies/read-article-policy-handler';
@@ -29,7 +29,7 @@ export class UsersController {
         private readonly usersService: UsersService,
         private readonly emailVerificationService: EmailVerificationService,
         // private readonly abilityFactory: AbilityFactory,
-        private readonly caslAbilityFactory: CaslAbilityFactory
+        // private readonly caslAbilityFactory: CaslAbilityFactory
     ) { }
 
     // #=======================================================================================#
@@ -39,8 +39,7 @@ export class UsersController {
     @HttpCode(HttpStatus.CREATED)
     @UsePipes(ValidationPipe)
     async createNewUser(@Body(RegisterPipe) _userData: CreateUsersDto) {
-        let userData: User;
-        userData = await this.usersService.getUserByEmail(_userData.email)
+        let userData = await this.usersService.getUserByEmail(_userData.email)
         if (userData) throw new ConflictException('this email already used')
 
         userData = await this.usersService.createNewUser(_userData)
@@ -55,20 +54,14 @@ export class UsersController {
         } else {
             throw new BadRequestException('can\'t create user, please try again')
         }
-
+        userData = (userData as any).toObject();
         // to remove password from object before retune data to user 
-        delete userData.password // why it isn't work? 
+        delete userData.password
+        delete userData['__v']
 
         return {
             message: `The code has been sent to your email = ${userData.email}`,
-            data: {
-                _id: userData._id,
-                name: userData.name,
-                email: userData.email,
-                is_admin: userData.is_admin,
-                is_verification: userData.is_verification,
-            }
-            // data: userData
+            data: userData
         }
     }
 
@@ -120,17 +113,13 @@ export class UsersController {
             expiresIn: 86400 //for 24 hour
         });
 
+        userData = (userData as any).toObject();
         // to remove password from object before retune data to user 
-        delete userData.password // why it isn't work? 
-
+        delete userData.password
+        delete userData['__v']
         return {
             token,
-            data: {
-                _id: userData._id,
-                name: userData.name,
-                email: userData.email,
-                is_verification: userData.is_verification,
-            }
+            data: userData
         }
     }
 

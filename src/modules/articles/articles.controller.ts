@@ -27,15 +27,12 @@ export class ArticlesController {
         if (data) throw new ConflictException('this title already exists');
 
         data = await this.articlesService.createArticle(_articleData);
-        return {
-            data: {
-                _id: data._id,
-                title: data.title,
-                description: data.description,
-                likes: data.likes,
-                user: data.user
-            }
-        }
+        
+        // to remove __v from object before retune data to user 
+        data = (data as any).toObject();
+        delete data['__v']
+
+        return { data }
     }
     // #=======================================================================================#
     // #			                        get article by id                                  #

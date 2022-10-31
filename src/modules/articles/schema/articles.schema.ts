@@ -22,7 +22,7 @@ export class Article {
     // for relations    
     // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Owner' });
     @Prop({ type: String, ref: 'User' })
-    user: User;
+    user: User | string;
 
 }
 
