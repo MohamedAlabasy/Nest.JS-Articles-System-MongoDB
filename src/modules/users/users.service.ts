@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { User } from './schema/user.schema';
 import { CreateUsersDto } from './dto/create-users.dto';
-import { LoginDto } from './dto/login.dto';
+// import { LoginDto } from './dto/login.dto';
 import { SELECT } from 'src/utilities/common';
 
 
@@ -36,8 +36,8 @@ export class UsersService {
     // #=======================================================================================#
     // #			                            login                                          #
     // #=======================================================================================#
-    async login(_userData: LoginDto): Promise<User> {
-        return await this.userModel.findOne({ email: _userData.email }).select(`+password ${SELECT}`)
+    async login(email: string): Promise<User> {
+        return await this.userModel.findOne({ email }).select(`+password ${SELECT}`)
     }
 
     // #=======================================================================================#

@@ -6,14 +6,19 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { EmailVerification, EmailVerificationSchema } from '../email-verification/schema/email-verification.schema';
 import { CaslModule } from 'src/casl/casl.module';
+// import { AuthService } from '../auth/auth.service';
+// import { AuthModule } from '../auth/auth.module';
+// import { JwtStrategy } from '../auth/strategies/jwt.strategy';
+// import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: EmailVerification.name, schema: EmailVerificationSchema }]),
-    CaslModule
+    CaslModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService, EmailVerificationService,]
+  providers: [UsersService, EmailVerificationService],
+  exports: [UsersService],
 })
 export class UsersModule { }

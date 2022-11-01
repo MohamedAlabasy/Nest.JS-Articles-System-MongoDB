@@ -1,23 +1,26 @@
-import { Body, Controller, HttpCode, HttpStatus, Headers, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException, Get, NotFoundException, ForbiddenException, UseGuards } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
+import { Body, Controller, HttpCode, HttpStatus, Headers, Post, UsePipes, ValidationPipe, ConflictException, BadRequestException, UnauthorizedException, BadGatewayException, Get, NotFoundException, ForbiddenException, UseGuards, Request } from '@nestjs/common';
+// import * as bcrypt from 'bcryptjs';
+// import * as jwt from 'jsonwebtoken';
 
 import { CreateUsersDto } from './dto/create-users.dto';
 import { UsersService } from './users.service';
 import { RegisterPipe } from '../../pipes/register.pipe';
-import { LoginDto } from './dto/login.dto';
-import { ACCESS_TOKEN_SECRET } from '../../config/token.config';
+// import { ACCESS_TOKEN_SECRET } from '../../config/token.config';
 import { emailVerification } from '../../utilities/email/emailVerification';
 import { EmailVerificationService } from '../email-verification/email-verification.service';
 import { CreateEmailActivateDto } from '../email-verification/dto/create-email-activate.dto';
 import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
-import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
-import { User } from './schema/user.schema';
+// import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
+// import { User } from './schema/user.schema';
 import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
 // import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { CheckPolicies } from 'src/policies-guard/check-policies.decorator';
 import { ReadArticlePolicyHandler } from 'src/policies-guard/policy-handler/Policies/read-article-policy-handler';
+// import { AuthService } from '../auth/auth.service';
+// import { AuthGuard } from '@nestjs/passport';
+// import { LocalAuthGuard } from '../auth/guards/local-auth.guard';
+import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 
 // import { ForbiddenError } from '@casl/ability';
 // import { HttpExceptionFilter } from './../../exception/http-exception.filter';
@@ -28,6 +31,7 @@ export class UsersController {
     constructor(
         private readonly usersService: UsersService,
         private readonly emailVerificationService: EmailVerificationService,
+        // private readonly authService: AuthService,
         // private readonly abilityFactory: AbilityFactory,
         // private readonly caslAbilityFactory: CaslAbilityFactory
     ) { }
@@ -95,46 +99,19 @@ export class UsersController {
         return { message: 'email activation successfully' }
     }
     // #=======================================================================================#
-    // #			                            login                                          #
-    // #=======================================================================================#
-    @Post('login')
-    @HttpCode(HttpStatus.OK)
-    @UsePipes(ValidationPipe)
-    async login(@Body(EmailLowerCasePipe) _userData: LoginDto) {
-        let userData: User;
-        userData = await this.usersService.login(_userData);
-        if (!userData) throw new UnauthorizedException(`there is no user with this email = ${_userData.email}`)
-
-        const IsValidPassword: boolean = bcrypt.compareSync(_userData.password, userData.password);
-        if (!IsValidPassword) throw new UnauthorizedException('invalid password')
-
-        // to add token
-        const token: string = 'Bearer ' + jwt.sign({ _id: userData._id, is_verification: userData.is_verification }, ACCESS_TOKEN_SECRET as string, {
-            expiresIn: 86400 //for 24 hour
-        });
-
-        userData = (userData as any).toObject();
-        // to remove password from object before retune data to user 
-        delete userData.password
-        delete userData['__v']
-        return {
-            token,
-            data: userData
-        }
-    }
-
-    // #=======================================================================================#
     // #                    get all Users => this end point for admin only                     #
     // #=======================================================================================#
+    @UseGuards(JwtAuthGuard)
     @Get()
     @UseGuards(PoliciesGuard)
     @CheckPolicies(new ReadArticlePolicyHandler())
     @HttpCode(HttpStatus.OK)
-    async getAllUsers(@Headers() _headers) {
+    async getAllUsers(@Request() req) {
         let data: any;
-        const userID = GET_ID_FROM_TOKEN(_headers)
+        // const userID = GET_ID_FROM_TOKEN(_headers)
+        console.log('getAllUsers', req.user);
 
-        data = await this.usersService.getUserById(userID)
+        data = await this.usersService.getUserById(req.user._id)
         if (!data) throw new NotFoundException('user not found')
 
         // const ability = this.caslAbilityFactory.createForUser(data);
