@@ -1,7 +1,8 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+// import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { mongodb } from './config/mongodb.config';
+import { MONGO_DB } from './config/mongodb.config';
 import { UsersModule } from './modules/users/users.module';
 // import { CheckTokensMiddleware } from './middleware/check-tokens.middleware';
 import { EmailVerificationModule } from './modules/email-verification/email-verification.module';
@@ -11,14 +12,15 @@ import { CommentsModule } from './modules/comments/comments.module';
 import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
 
 import { CaslModule } from './casl/casl.module';
-import { APP_GUARD } from '@nestjs/core';
-import { PoliciesGuard } from './policies-guard/policies.guard';
 import { AuthModule } from './modules/auth/auth.module';
-import { JwtStrategy } from './strategies/jwt.strategy';
+import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
+// import { APP_GUARD } from '@nestjs/core';
+// import { PoliciesGuard } from './policies-guard/policies.guard';
+// import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(mongodb),
+    MongooseModule.forRoot(MONGO_DB),
     UsersModule,
     AuthModule,
     EmailVerificationModule,
@@ -30,13 +32,19 @@ import { JwtStrategy } from './strategies/jwt.strategy';
   ],
   providers: [
     JwtStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: PoliciesGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard
+    // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: PoliciesGuard,
+    // },
   ],
 })
 export class AppModule { }
+
+//#region "Middleware"
 // export class AppModule implements NestModule {
 //   configure(consumer: MiddlewareConsumer) {
 //     consumer
@@ -53,3 +61,4 @@ export class AppModule { }
 //       ).forRoutes('*')
 //   }
 // }
+//#endregion "Middleware"

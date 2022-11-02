@@ -4,7 +4,7 @@ import { User } from 'src/modules/users/schema/user.schema';
 
 export type EmailVerificationDocument = EmailVerification & Document
 
-@Schema({ collection: 'email_verification' })
+@Schema({ collection: 'email_verification', timestamps: true })
 export class EmailVerification {
 
     @Prop()

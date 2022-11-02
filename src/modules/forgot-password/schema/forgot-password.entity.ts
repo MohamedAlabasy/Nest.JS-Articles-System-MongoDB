@@ -4,7 +4,7 @@ import { User } from 'src/modules/users/schema/user.schema';
 
 export type ForgotPasswordDocument = ForgotPassword & Document
 
-@Schema({ collection: 'forgot_password' })
+@Schema({ collection: 'forgot_password', timestamps: true })
 export class ForgotPassword {
     @Prop()
     _id: string;

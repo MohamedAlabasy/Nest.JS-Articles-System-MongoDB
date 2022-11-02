@@ -7,7 +7,7 @@ import { EmojiType } from "src/utilities/common";
 
 export type LikeDocument = Like & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Like {
 
     @Prop()

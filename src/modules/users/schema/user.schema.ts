@@ -1,17 +1,9 @@
-// import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-
-// import { Articles } from './articles.entity';
-// import { Comments } from './comments.entity';
-// import { EmailVerification } from './email-verification.entity';
-// import { Likes } from './likes.entity';
-// import { ForgotPassword } from './forgot-password.entity';
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
     @Prop()
     _id: string;
@@ -30,6 +22,16 @@ export class User {
 
     @Prop({ select: false })
     password: string;
+
+
+    // @Prop()
+    // @Field(() => Date, { description: 'Created At' })
+    // createdAt?: Date
+
+    // @Prop()
+    // @Field(() => Date, { description: 'Updated At' })
+    // updatedAt?: Date
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

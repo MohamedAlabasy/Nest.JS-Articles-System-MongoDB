@@ -4,7 +4,7 @@ import { User } from 'src/modules/users/schema/user.schema';
 
 export type ArticleDocument = Article & Document
 
-@Schema()
+@Schema({ timestamps: true })
 export class Article {
 
     @Prop()

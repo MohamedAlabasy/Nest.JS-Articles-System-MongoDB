@@ -1,1 +1,1 @@
-export const mongodb: string = 'mongodb://localhost/articles_system'
+export const MONGO_DB: string = 'mongodb://localhost/articles_system'

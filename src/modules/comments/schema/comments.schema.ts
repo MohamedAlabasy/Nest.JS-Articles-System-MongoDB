@@ -6,7 +6,7 @@ import { User } from 'src/modules/users/schema/user.schema';
 
 export type CommentDocument = Comment & Document
 
-@Schema()
+@Schema({ timestamps: true })
 export class Comment {
 
     @Prop()
