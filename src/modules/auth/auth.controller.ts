@@ -1,7 +1,5 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
+import { Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../guards/local-auth.guard';
 
@@ -12,14 +10,10 @@ export class AuthController {
     // #=======================================================================================#
     // #			                            login                                          #
     // #=======================================================================================#    
-    @UseGuards(LocalAuthGuard)
     @Post('')
     @HttpCode(HttpStatus.OK)
-    @UsePipes(ValidationPipe)
-    // async login(@Body() userData: LoginDto) {
-    async login(@Body(EmailLowerCasePipe) _userData: LoginDto, @Request() req) {
-        // console.log('_userData', _userData);
-        // console.log('user', req.user);
+    @UseGuards(LocalAuthGuard)
+    async login(@Request() req) {
 
         // to remove password from object before retune data to user 
         delete req.user._doc.password
