@@ -32,7 +32,6 @@ import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
   ],
   providers: [
     JwtStrategy,
-    // CaslModule
     // {
     //   provide: APP_GUARD,
     //   useClass: JwtAuthGuard
