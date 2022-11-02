@@ -1,5 +1,5 @@
 import { Controller, Post, Delete, Headers, Get, Param, UsePipes, ValidationPipe, Body, HttpStatus, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
 import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { ArticlesService } from '../articles/articles.service';
 import { CreateLikeDto } from './dto/create-like.dto';

@@ -1,5 +1,6 @@
 
 import {
+    BadRequestException,
     ExecutionContext,
     ForbiddenException,
     Injectable,
@@ -19,6 +20,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     handleRequest(err, user, info) {
         // You can throw an exception based on either "info" or "err" arguments
+
         if (!user && (info.message === 'No auth token' || info.message == 'invalid token')) {
             throw err || new ForbiddenException(info.message);
         }
@@ -31,8 +33,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
             }
         }
 
-        console.log('user', user);
-
+        if (user.is_verification == false) throw new BadRequestException('You must verification email first');
 
         return user;
     }

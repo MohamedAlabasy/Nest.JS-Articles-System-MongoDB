@@ -38,7 +38,7 @@ export class ArticlesService {
     // #			                        get all articles                                   #
     // #=======================================================================================#
     async getAllArticles(): Promise<Article[]> {
-        return await this.articlesModel.find({}).populate({ path: 'user', select: SELECT }).select(`${SELECT} +createdAt`)
+        return await this.articlesModel.find({}).populate({ path: 'user', select: SELECT }).select(SELECT)
     }
     // #=======================================================================================#
     // #			                        update articles                                    #

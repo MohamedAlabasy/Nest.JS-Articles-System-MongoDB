@@ -1,13 +1,12 @@
-import { Controller, Get, Request, Post, Patch, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, ConflictException, UseGuards, UseFilters } from '@nestjs/common';
+import { Controller, Get, Request, Post, Patch, Delete, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, ConflictException, UseGuards } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
 import { PoliciesGuard } from 'src/policies-guard/policies.guard';
-import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 import { Article } from './schema/articles.schema';
-// import { HttpExceptionFilter } from './../../exception/http-exception.filter';
+// import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 
 @Controller('articles')
 // @UseFilters(HttpExceptionFilter)
@@ -45,7 +44,6 @@ export class ArticlesController {
     // #			                        get article by id                                  #
     // #=======================================================================================#
     @Get(':id')
-    @HttpCode(HttpStatus.OK)
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     async getArticleById(@Param('id', ParseUUIDPipe) id: string) {
@@ -59,7 +57,6 @@ export class ArticlesController {
     // #			                        get all articles                                   #
     // #=======================================================================================#
     @Get()
-    @HttpCode(HttpStatus.OK)
     async getAllArticles() {
         const data = await this.articlesService.getAllArticles()
         if (data && data.length == 0) throw new NotFoundException('No articles to show')
@@ -73,7 +70,6 @@ export class ArticlesController {
     // #			                        update articles                                    #
     // #=======================================================================================#
     @Patch(':articleID')
-    @HttpCode(HttpStatus.OK)
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     @UsePipes(ValidationPipe)
@@ -104,7 +100,6 @@ export class ArticlesController {
     // #			                        delete articles                                    #
     // #=======================================================================================#
     @Delete(':articleID')
-    @HttpCode(HttpStatus.OK)
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     async deleteArticle(@Param('articleID', ParseUUIDPipe) articleID: string, @Request() req) {

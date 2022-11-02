@@ -9,7 +9,7 @@ import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
 import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { CheckPolicies } from 'src/policies-guard/check-policies.decorator';
 import { ReadArticlePolicyHandler } from 'src/policies-guard/policy-handler/Policies/read-article-policy-handler';
-import { JwtAuthGuard } from '../../guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 // import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 
 // import { ForbiddenError } from '@casl/ability';
