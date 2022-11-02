@@ -24,6 +24,7 @@ export class User {
     password: string;
 
 
+    //#region "add timestamps manually"
     // @Prop()
     // @Field(() => Date, { description: 'Created At' })
     // createdAt?: Date
@@ -31,7 +32,7 @@ export class User {
     // @Prop()
     // @Field(() => Date, { description: 'Updated At' })
     // updatedAt?: Date
-
+    //#endregion "add timestamps manually"
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
