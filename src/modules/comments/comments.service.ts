@@ -15,12 +15,12 @@ export class CommentsService {
     // #=======================================================================================#
     // #			                        create comment                                     #
     // #=======================================================================================#
-    async createComment(_commentData: CreateCommentDto): Promise<Comment> {
+    async createComment(commentData: CreateCommentDto): Promise<Comment> {
         return this.commentsModel.create({
             _id: uuidv4(),
-            comment: _commentData.comment,
-            user: _commentData.user,
-            article: _commentData.article
+            comment: commentData.comment,
+            user: commentData.user,
+            article: commentData.article
         });
     }
 
@@ -34,9 +34,9 @@ export class CommentsService {
     // #=======================================================================================#
     // #			                        update comment                                     #
     // #=======================================================================================#
-    async updateComment(_id: string, _commentData: UpdateCommentDto): Promise<Comment> {
+    async updateComment(_id: string, commentData: UpdateCommentDto): Promise<Comment> {
         return await this.commentsModel.findByIdAndUpdate({ _id }, {
-            comment: _commentData.comment,
+            comment: commentData.comment,
         }, { new: true }).populate({ path: 'user article', select: `${SELECT} -user` }).select(SELECT)
     }
     // #=======================================================================================#

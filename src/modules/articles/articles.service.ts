@@ -14,12 +14,12 @@ export class ArticlesService {
     // #=======================================================================================#
     // #			                          create article                                   #
     // #=======================================================================================#
-    async createArticle(_articleData: CreateArticleDto): Promise<Article> {
+    async createArticle(articleData: CreateArticleDto): Promise<Article> {
         return this.articlesModel.create({
             _id: uuidv4(),
-            title: _articleData.title,
-            description: _articleData.description,
-            user: _articleData.user
+            title: articleData.title,
+            description: articleData.description,
+            user: articleData.user
         });
     }
     // #=======================================================================================#
@@ -43,10 +43,10 @@ export class ArticlesService {
     // #=======================================================================================#
     // #			                        update articles                                    #
     // #=======================================================================================#
-    async updateArticle(_id: string, _articleData: UpdateArticleDto): Promise<Article> {
+    async updateArticle(_id: string, articleData: UpdateArticleDto): Promise<Article> {
         return await this.articlesModel.findByIdAndUpdate({ _id }, {
-            title: _articleData.title,
-            description: _articleData.description
+            title: articleData.title,
+            description: articleData.description
         }, { new: true }).populate({ path: 'user', select: SELECT }).select(SELECT);
     }
     // #=======================================================================================#

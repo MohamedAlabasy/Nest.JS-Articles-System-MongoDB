@@ -45,7 +45,7 @@ export class CommentsController {
     @Get(":articleID")
     async getAllCommentsOnArticles(@Param('articleID', ParseUUIDPipe) articleID: string) {
         const data = await this.commentService.getAllCommentsOnArticles(articleID)
-        if (data && data.length == 0) throw new NotFoundException('No comments on this articles to show')
+        if (data && data.length === 0) throw new NotFoundException('No comments on this articles to show')
 
         return {
             count: data.length,

@@ -26,10 +26,10 @@ export class EmailVerificationService {
     // #=======================================================================================#
     // #			                        check code                                         #
     // #=======================================================================================#
-    async checkCode(_emailActivateData: CreateEmailActivateDto): Promise<EmailVerification> {
+    async checkCode(emailActivateData: CreateEmailActivateDto): Promise<EmailVerification> {
         return await this.emailVerificationModel.findOne({
-            code: _emailActivateData.code,
-            user: _emailActivateData.user
+            code: emailActivateData.code,
+            user: emailActivateData.user
         })
     }
 }

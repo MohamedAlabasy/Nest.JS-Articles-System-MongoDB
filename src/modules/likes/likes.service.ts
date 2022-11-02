@@ -21,15 +21,15 @@ export class LikesService {
     // #=======================================================================================#
     // #			                      create like article                                  #
     // #=======================================================================================#
-    async createLikeArticle(_likeData: CreateLikeDto): Promise<Like> {
+    async createLikeArticle(likeData: CreateLikeDto): Promise<Like> {
         return this.likeModel.create({
             _id: uuidv4(),
-            type: _likeData.type,
-            article: _likeData.article,
-            user: _likeData.user,
+            type: likeData.type,
+            article: likeData.article,
+            user: likeData.user,
         });
     }
-    
+
     // #=======================================================================================#
     // #			                        unlike article                                     #
     // #=======================================================================================#
