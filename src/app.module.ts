@@ -21,6 +21,7 @@ import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
 @Module({
   imports: [
     MongooseModule.forRoot(MONGO_DB),
+    CaslModule,
     UsersModule,
     AuthModule,
     EmailVerificationModule,
@@ -28,10 +29,10 @@ import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
     LikesModule,
     CommentsModule,
     ForgotPasswordModule,
-    CaslModule,
   ],
   providers: [
     JwtStrategy,
+    // CaslModule
     // {
     //   provide: APP_GUARD,
     //   useClass: JwtAuthGuard
@@ -50,14 +51,14 @@ export class AppModule { }
 //     consumer
 //       // .apply(LoggerMiddleware).forRoutes('*')
 //       .apply(CheckTokensMiddleware).exclude(
-//         { path: 'users/login', method: RequestMethod.POST },
-//         { path: 'users/register', method: RequestMethod.POST },
-//         { path: 'users/activate', method: RequestMethod.POST },
-//         { path: 'forgotPassword/checkEmail', method: RequestMethod.POST },
-//         { path: 'forgotPassword/resetPassword', method: RequestMethod.POST },
-//         { path: 'articles', method: RequestMethod.GET },
-//         { path: 'likes/:articleID', method: RequestMethod.GET },
-//         { path: 'comments/:articleID', method: RequestMethod.GET },
+        // { path: 'auth', method: RequestMethod.POST },
+        // { path: 'users/register', method: RequestMethod.POST },
+        // { path: 'users/activate', method: RequestMethod.POST },
+        // { path: 'forgotPassword/checkEmail', method: RequestMethod.POST },
+        // { path: 'forgotPassword/resetPassword', method: RequestMethod.POST },
+        // { path: 'articles', method: RequestMethod.GET },
+        // { path: 'likes/:articleID', method: RequestMethod.GET },
+        // { path: 'comments/:articleID', method: RequestMethod.GET },
 //       ).forRoutes('*')
 //   }
 // }

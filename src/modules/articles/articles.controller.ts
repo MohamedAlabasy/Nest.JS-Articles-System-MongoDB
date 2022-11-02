@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Patch, Headers, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, ConflictException } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Headers, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, ConflictException, UseGuards } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { GET_ID_FROM_TOKEN } from '../../utilities/get-id-from-token';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 // import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
 @Controller('articles')
@@ -19,7 +21,9 @@ export class ArticlesController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @UsePipes(ValidationPipe)
-    async createArticle(@Body() _articleData: CreateArticleDto, @Headers() _headers) {
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
+    async createArticle(@Body() _articleData: CreateArticleDto, /* @Headers() _headers */) {
         let data: any;
         _articleData.user = GET_ID_FROM_TOKEN(_headers)
 
@@ -27,7 +31,7 @@ export class ArticlesController {
         if (data) throw new ConflictException('this title already exists');
 
         data = await this.articlesService.createArticle(_articleData);
-        
+
         // to remove __v from object before retune data to user 
         data = (data as any).toObject();
         delete data['__v']
@@ -39,6 +43,8 @@ export class ArticlesController {
     // #=======================================================================================#
     @Get(':_id')
     @HttpCode(HttpStatus.OK)
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
     async getArticleById(@Param('_id', ParseUUIDPipe) _id: string) {
 
         const data = await this.articlesService.getArticleById(_id)
@@ -66,6 +72,8 @@ export class ArticlesController {
     @Patch(':_articleID')
     @HttpCode(HttpStatus.OK)
     @UsePipes(ValidationPipe)
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
     async updateArticle(@Param('_articleID', ParseUUIDPipe) _articleID: string, @Body() _articleData: UpdateArticleDto, @Headers() _headers) {
         let data: any;
         _articleData.user = GET_ID_FROM_TOKEN(_headers)
@@ -93,6 +101,8 @@ export class ArticlesController {
     // #=======================================================================================#
     @Delete(':_articleID')
     @HttpCode(HttpStatus.OK)
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
     async deleteArticle(@Param('_articleID', ParseUUIDPipe) _articleID: string, @Headers() _headers) {
         let data: any;
         const userID = GET_ID_FROM_TOKEN(_headers)

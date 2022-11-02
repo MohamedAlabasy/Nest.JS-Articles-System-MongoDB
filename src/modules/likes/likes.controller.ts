@@ -1,4 +1,6 @@
-import { Controller, Post, Delete, Headers, Get, Param, UsePipes, ValidationPipe, Body, HttpStatus, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
+import { Controller, Post, Delete, Headers, Get, Param, UsePipes, ValidationPipe, Body, HttpStatus, HttpCode, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
 import { ArticlesService } from '../articles/articles.service';
 import { CreateLikeDto } from './dto/create-like.dto';
@@ -19,7 +21,9 @@ export class LikesController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @UsePipes(ValidationPipe)
-    async createArticle(@Body() _articleData: CreateLikeDto, @Headers() _headers) {
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
+    async createArticle(@Body() _articleData: CreateLikeDto, /* @Headers() _headers */) {
         let data: any;
         _articleData.user = GET_ID_FROM_TOKEN(_headers)
 
@@ -46,7 +50,9 @@ export class LikesController {
     @Delete(':articleID')
     @HttpCode(HttpStatus.OK)
     @UsePipes(ValidationPipe)
-    async unLikeArticle(@Param('articleID', ParseUUIDPipe) _articleID: string, @Headers() _headers) {
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
+    async unLikeArticle(@Param('articleID', ParseUUIDPipe) _articleID: string, /* @Headers() _headers */) {
         let data: any;
         const userID = GET_ID_FROM_TOKEN(_headers)
 
@@ -69,7 +75,7 @@ export class LikesController {
     // #			                    get all like on article                                #
     // #=======================================================================================#
     @Get(':articleID')
-    @HttpCode(HttpStatus.OK)
+    // @HttpCode(HttpStatus.OK)
     async getAllLikeOnArticle(@Param('articleID', ParseUUIDPipe) _articleID: string) {
         const data = await this.likesService.getAllLikeOnArticle(_articleID)
         if (data && data.length == 0) throw new NotFoundException(`there is no like with this article = ${_articleID}`);

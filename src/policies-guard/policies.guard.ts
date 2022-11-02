@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable, NotFoundException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { AppAbility, CaslAbilityFactory } from "src/casl/casl-ability.factory";
 import { CHECK_POLICIES_KEY } from "src/config/policy";
@@ -16,6 +16,8 @@ export class PoliciesGuard implements CanActivate {
         const policyHandlers = this.reflector.get<PolicyHandler[]>(CHECK_POLICIES_KEY, context.getHandler(),) || [];
 
         const { user } = context.switchToHttp().getRequest();
+        if (!user) throw new NotFoundException('not found user')
+
         const ability = this.caslAbilityFactory.createForUser(user);
 
         return policyHandlers.every((handler) =>

@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Headers, Patch, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, HttpCode, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
+import { Controller, Get, Post, Headers, Patch, Delete, HttpStatus, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, HttpCode, NotFoundException, BadRequestException, ForbiddenException, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
 import { ArticlesService } from '../articles/articles.service';
 import { CommentsService } from './comments.service';
@@ -19,7 +21,9 @@ export class CommentsController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @UsePipes(ValidationPipe)
-    async createArticle(@Body() _commentData: CreateCommentDto, @Headers() _headers) {
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
+    async createArticle(@Body() _commentData: CreateCommentDto, /* @Headers() _headers */) {
         let data: any;
         _commentData.user = GET_ID_FROM_TOKEN(_headers)
 
@@ -55,7 +59,9 @@ export class CommentsController {
     @Patch(':commentID')
     @HttpCode(HttpStatus.OK)
     @UsePipes(ValidationPipe)
-    async updateComment(@Param('commentID', ParseUUIDPipe) _commentID: string, @Body() _commentData: UpdateCommentDto, @Headers() _headers) {
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
+    async updateComment(@Param('commentID', ParseUUIDPipe) _commentID: string, @Body() _commentData: UpdateCommentDto, /* @Headers() _headers */) {
         let data: any;
         _commentData.user = GET_ID_FROM_TOKEN(_headers)
 
@@ -76,7 +82,9 @@ export class CommentsController {
     // #=======================================================================================#
     @Delete(':commentID')
     @HttpCode(HttpStatus.OK)
-    async deleteComment(@Param('commentID', ParseUUIDPipe) _commentID: string, @Headers() _headers) {
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
+    async deleteComment(@Param('commentID', ParseUUIDPipe) _commentID: string, /* @Headers() _headers */) {
         let data: any;
         const userID: string = GET_ID_FROM_TOKEN(_headers)
 

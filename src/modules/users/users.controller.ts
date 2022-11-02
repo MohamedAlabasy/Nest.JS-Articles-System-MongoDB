@@ -12,7 +12,7 @@ import { CreateEmailActivateDto } from '../email-verification/dto/create-email-a
 import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
 // import { EmailLowerCasePipe } from 'src/pipes/email-lower-case.pipe';
 // import { User } from './schema/user.schema';
-import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
+// import { GET_ID_FROM_TOKEN } from 'src/utilities/get-id-from-token';
 // import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { CheckPolicies } from 'src/policies-guard/check-policies.decorator';
@@ -101,15 +101,14 @@ export class UsersController {
     // #=======================================================================================#
     // #                    get all Users => this end point for admin only                     #
     // #=======================================================================================#
-    @UseGuards(JwtAuthGuard)
     @Get()
-    @UseGuards(PoliciesGuard)
-    @CheckPolicies(new ReadArticlePolicyHandler())
     @HttpCode(HttpStatus.OK)
+    @CheckPolicies(new ReadArticlePolicyHandler())
+    @UseGuards(PoliciesGuard)
+    @UseGuards(JwtAuthGuard)
     async getAllUsers(@Request() req) {
         let data: any;
         // const userID = GET_ID_FROM_TOKEN(_headers)
-        console.log('getAllUsers', req.user);
 
         data = await this.usersService.getUserById(req.user._id)
         if (!data) throw new NotFoundException('user not found')
