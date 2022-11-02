@@ -18,7 +18,8 @@ export const REGISTER_CODE: number = Math.floor(100000 + Math.random() * 900000)
 export const EXPIRE_CODE_TIME: number = 3600000;
 
 // remove from database return object 
-export const SELECT: string = '-__v';
+export const SELECT: string = '-__v -createdAt -updatedAt';
+export const LIKE_SELECT: string = '-__v';
 
 // remove from database return object 
 export const BASE_URL: string = 'http://127.0.0.1:3000';

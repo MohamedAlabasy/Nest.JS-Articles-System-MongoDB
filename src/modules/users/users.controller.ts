@@ -40,7 +40,6 @@ export class UsersController {
     // #			                            Register                                       #
     // #=======================================================================================#
     @Post('register')
-    @HttpCode(HttpStatus.CREATED)
     @UsePipes(ValidationPipe)
     async createNewUser(@Body(RegisterPipe) _userData: CreateUsersDto) {
         let userData = await this.usersService.getUserByEmail(_userData.email)
@@ -108,7 +107,6 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     async getAllUsers(@Request() req) {
         let data: any;
-        // const userID = GET_ID_FROM_TOKEN(_headers)
 
         data = await this.usersService.getUserById(req.user._id)
         if (!data) throw new NotFoundException('user not found')

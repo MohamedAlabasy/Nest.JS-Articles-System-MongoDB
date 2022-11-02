@@ -22,10 +22,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
         //     Exception Error : ${exception.message}
         // }`);
 
-
         response.status(status).json({
             statusCode: status,
-            message: exception.message,
+            message: exception['response'].message,
+            error: exception['response'].error,
+            // error: exception.message,
             // timestamp: new Date().toISOString(),
             // path: request.url,
         });

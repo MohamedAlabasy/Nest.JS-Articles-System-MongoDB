@@ -14,6 +14,8 @@ import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.
 import { CaslModule } from './casl/casl.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
+import { HttpExceptionFilter } from './exception/http-exception.filter';
+import { APP_FILTER } from '@nestjs/core';
 // import { APP_GUARD } from '@nestjs/core';
 // import { PoliciesGuard } from './policies-guard/policies.guard';
 // import { JwtAuthGuard } from './guards/jwt-auth.guard';

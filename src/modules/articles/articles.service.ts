@@ -38,7 +38,7 @@ export class ArticlesService {
     // #			                        get all articles                                   #
     // #=======================================================================================#
     async getAllArticles(): Promise<Article[]> {
-        return await this.articlesModel.find({}).populate({ path: 'user', select: SELECT }).select(SELECT)
+        return await this.articlesModel.find({}).populate({ path: 'user', select: SELECT }).select(`${SELECT} +createdAt`)
     }
     // #=======================================================================================#
     // #			                        update articles                                    #
@@ -55,11 +55,10 @@ export class ArticlesService {
     async deleteArticle(_id: string) {
         return await this.articlesModel.findByIdAndDelete({ _id });
     }
-
     // #=======================================================================================#
     // #			                     update number of Likes                                #
     // #=======================================================================================#
     async updateNumberOfLikes(_id: string, likes: number): Promise<Article> {
-        return await this.articlesModel.findByIdAndUpdate({ _id }, { likes }, { new: true })
+        return await this.articlesModel.findByIdAndUpdate({ _id }, { likes }, { new: true }) // new: true to return with new data 
     }
 }

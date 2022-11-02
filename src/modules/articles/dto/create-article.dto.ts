@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length, IsInt } from "class-validator";
+import { IsNotEmpty, IsString, Length } from "class-validator";
 
 export class CreateArticleDto {
 
