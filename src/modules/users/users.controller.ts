@@ -6,10 +6,13 @@ import { emailVerification } from '../../utilities/email/emailVerification';
 import { EmailVerificationService } from '../email-verification/email-verification.service';
 import { CreateEmailActivateDto } from '../email-verification/dto/create-email-activate.dto';
 import { REGISTER_CODE, EXPIRE_CODE_TIME } from '../../utilities/common'
-import { PoliciesGuard } from 'src/policies-guard/policies.guard';
-import { CheckPolicies } from 'src/policies-guard/check-policies.decorator';
-import { ReadArticlePolicyHandler } from 'src/policies-guard/policy-handler/Policies/read-article-policy-handler';
+// import { PoliciesGuard } from 'src/policies-guard/policies.guard';
+// import { CheckPolicies } from 'src/policies-guard/check-policies.decorator';
+// import { ReadArticlePolicyHandler } from 'src/policies-guard/policy-handler/Policies/read-article-policy-handler';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ReadArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/read-article-policy-handler';
+import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
+import { PoliciesGuard } from 'src/casl/policies/policies.guard';
 // import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 
 // import { ForbiddenError } from '@casl/ability';

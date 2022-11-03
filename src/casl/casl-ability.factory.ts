@@ -14,14 +14,11 @@ export class CaslAbilityFactory {
     createForUser(user: User) { //my fun
         const { can, cannot, build } = new AbilityBuilder<Ability<[Action, Subjects]>>(Ability as AbilityClass<AppAbility>);
 
+        // not equal
+        // cannot(Action.Mange, User, { orgId: { $ne: user.orgId } }).because('u cant mange orgId')
         if (user.is_admin) {
-            // builder.can(Action.Mange, 'all')
-            // can(Action.Manage, 'all'); // read-write access to everything
             can(Action.Read, User)
-            // not equal
-            // cannot(Action.Mange, User, { orgId: { $ne: user.orgId } }).because('u cant mange orgId')
         } else {
-            // can(Action.Read, 'all'); // read-only access to everything
             cannot(Action.Read, User).because('you isn\'t an admin')
         }
 

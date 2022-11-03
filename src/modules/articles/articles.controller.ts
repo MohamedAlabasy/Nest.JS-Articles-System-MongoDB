@@ -4,8 +4,9 @@ import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
-import { PoliciesGuard } from 'src/policies-guard/policies.guard';
+// import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { Article } from './schema/articles.schema';
+import { PoliciesGuard } from 'src/casl/policies/policies.guard';
 // import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 
 @Controller('articles')
