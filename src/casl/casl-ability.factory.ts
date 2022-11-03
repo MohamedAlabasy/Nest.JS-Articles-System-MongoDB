@@ -7,7 +7,7 @@ import { Action } from "./action.enum";
 // type Subjects = InferSubjects<typeof Article | typeof User> | 'all';
 type Subjects = InferSubjects<typeof User> | 'all'; // all is a wildcard for any action
 
-export type AppAbility = Ability<[Action, Subjects]>; // all is a wildcard for any action
+export type AppAbility = Ability<[Action, Subjects]>;
 
 @Injectable()
 export class CaslAbilityFactory {

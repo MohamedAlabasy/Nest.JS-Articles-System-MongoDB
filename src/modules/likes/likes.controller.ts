@@ -60,6 +60,8 @@ export class LikesController {
         data = await this.likesService.getLikeByArticleId(articleID)
         if (data && data.user !== userID) throw new ForbiddenException('this like can only be unlike by the person who created it')
 
+        if (data.createdAt + 3600000 > new Date()) throw new ForbiddenException('You can\'t unlike after 7 days')
+
         data = await this.likesService.checkLikeArticle(userID, articleID)
         if (!data) throw new BadRequestException('You didn\'t like this article before');
 

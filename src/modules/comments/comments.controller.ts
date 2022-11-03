@@ -89,6 +89,8 @@ export class CommentsController {
         if (!data) throw new NotFoundException(`no comment with this _id = ${commentID}`)
         if (data.user._id !== userID) throw new ForbiddenException('this comment can only be deleted by the person who created it')
 
+        if (data.createdAt + 3600000 > new Date()) throw new ForbiddenException('You can\'t delete after 7 days')
+
         data = await this.commentService.deleteComment(commentID)
         if (data.affected === 0) throw new BadRequestException('can\'t delete this comment please try again')
 
