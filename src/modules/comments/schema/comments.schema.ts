@@ -20,7 +20,7 @@ export class Comment {
     user: User;
 
     @Prop({ type: String, ref: 'Article' })
-    article: Article;
+    article: Article | string;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment)

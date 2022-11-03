@@ -1,5 +1,8 @@
 import { Controller, Get, Post, Patch, Delete, Request, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, UseGuards } from '@nestjs/common';
+import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
 import { PoliciesGuard } from 'src/casl/policies/policies.guard';
+import { DeleteCommentPolicyHandler } from 'src/casl/policies/policy-handler/Policies/delete-comment-policy-handler';
+import { UpdateCommentPolicyHandler } from 'src/casl/policies/policy-handler/Policies/update-comment-policy-handler';
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
 // import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { ArticlesService } from '../articles/articles.service';
@@ -57,6 +60,7 @@ export class CommentsController {
     // #			                        update comments                                    #
     // #=======================================================================================#
     @Patch(':commentID')
+    @CheckPolicies(new UpdateCommentPolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     @UsePipes(ValidationPipe)
@@ -80,6 +84,7 @@ export class CommentsController {
     // #			                        delete comments                                    #
     // #=======================================================================================#
     @Delete(':commentID')
+    @CheckPolicies(new DeleteCommentPolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     async deleteComment(@Param('commentID', ParseUUIDPipe) commentID: string, @Request() req) {
@@ -88,7 +93,7 @@ export class CommentsController {
 
         data = await this.commentService.getCommentById(commentID)
         if (!data) throw new NotFoundException(`no comment with this _id = ${commentID}`)
-        if (data.user._id !== userID) throw new ForbiddenException('this comment can only be deleted by the person who created it')
+        // if (data.user._id !== userID) throw new ForbiddenException('this comment can only be deleted by the person who created it')
 
         if (data.createdAt + 3600000 > new Date()) throw new ForbiddenException('You can\'t delete after 7 days')
 

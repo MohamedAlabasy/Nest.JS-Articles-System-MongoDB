@@ -1,5 +1,3 @@
-// import { AppAbility } from '../../casl/casl-ability.factory';
-
 import { AppAbility } from "src/casl/casl-ability.factory";
 
 export interface IPolicyHandler {

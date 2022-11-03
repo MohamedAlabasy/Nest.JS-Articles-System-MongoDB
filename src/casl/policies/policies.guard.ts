@@ -18,6 +18,8 @@ export class PoliciesGuard implements CanActivate {
         const { user } = context.switchToHttp().getRequest();
         if (!user) throw new NotFoundException('not found user')
 
+        console.log('user = ', user);
+
         const ability = this.caslAbilityFactory.createForUser(user);
 
         return policyHandlers.every((handler) =>

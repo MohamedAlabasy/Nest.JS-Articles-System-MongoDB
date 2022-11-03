@@ -1,5 +1,7 @@
 import { Controller, Post, Delete, Request, Get, Param, UsePipes, ValidationPipe, Body, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, UseGuards } from '@nestjs/common';
+import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
 import { PoliciesGuard } from 'src/casl/policies/policies.guard';
+import { DeleteLikePolicyHandler } from 'src/casl/policies/policy-handler/Policies/delete-like-policy-handler';
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
 // import { PoliciesGuard } from 'src/policies-guard/policies.guard';
 import { ArticlesService } from '../articles/articles.service';
@@ -48,6 +50,7 @@ export class LikesController {
     // #			                        unlike article                                     #
     // #=======================================================================================#
     @Delete(':articleID')
+    @CheckPolicies(new DeleteLikePolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     @UsePipes(ValidationPipe)
@@ -59,7 +62,7 @@ export class LikesController {
         if (!articleData) throw new NotFoundException(`no article with this id =${articleID}`);
 
         data = await this.likesService.getLikeByArticleId(articleID)
-        if (data && data.user !== userID) throw new ForbiddenException('this like can only be unlike by the person who created it')
+        // if (data && data.user !== userID) throw new ForbiddenException('this like can only be unlike by the person who created it')
 
         if (data.createdAt + 3600000 > new Date()) throw new ForbiddenException('You can\'t unlike after 7 days')
 

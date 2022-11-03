@@ -4,9 +4,14 @@ import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
-// import { PoliciesGuard } from 'src/policies-guard/policies.guard';
-import { Article } from './schema/articles.schema';
 import { PoliciesGuard } from 'src/casl/policies/policies.guard';
+import { Article } from './schema/articles.schema';
+import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
+import { UpdateArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/update-article-policy-handler';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
+import { Action } from 'src/casl/action.enum';
+// import { ForbiddenError } from '@casl/ability';
+import { DeleteArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/delete-article-policy-handler';
 // import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 
 @Controller('articles')
@@ -14,7 +19,8 @@ import { PoliciesGuard } from 'src/casl/policies/policies.guard';
 export class ArticlesController {
     constructor(
         private readonly articlesService: ArticlesService,
-        private readonly usersService: UsersService
+        private readonly usersService: UsersService,
+        private caslAbilityFactory: CaslAbilityFactory
     ) { }
     // #=======================================================================================#
     // #			                          create Article                                   #
@@ -71,6 +77,7 @@ export class ArticlesController {
     // #			                        update articles                                    #
     // #=======================================================================================#
     @Patch(':articleID')
+    @CheckPolicies(new UpdateArticlePolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     @UsePipes(ValidationPipe)
@@ -86,7 +93,14 @@ export class ArticlesController {
         if (!data) throw new NotFoundException(`no articles with this id = ${articleID}`)
 
 
-        if (data.user.id !== req.user._id) throw new ForbiddenException('this article can only be modified by the person who created it')
+        const ability = this.caslAbilityFactory.createForUser(req.user);
+        // console.log(ability);
+        console.log(data.user._id, '00', req.user._id);
+        console.log(ability.can(Action.Update, data));
+        // ForbiddenError.from(ability).throwUnlessCan(Action.Update, { private: true })
+
+
+        // if (data.user.id !== req.user._id) throw new ForbiddenException('this article can only be modified by the person who created it')
 
 
         data = await this.articlesService.updateArticle(articleID, articleData)
@@ -101,6 +115,7 @@ export class ArticlesController {
     // #			                        delete articles                                    #
     // #=======================================================================================#
     @Delete(':articleID')
+    @CheckPolicies(new DeleteArticlePolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     async deleteArticle(@Param('articleID', ParseUUIDPipe) articleID: string, @Request() req) {
@@ -111,7 +126,7 @@ export class ArticlesController {
 
         data = await this.articlesService.getArticleById(articleID)
         if (!data) throw new NotFoundException(`no articles with this _id = ${articleID}`)
-        if (data.user._id !== req.user._id) throw new ForbiddenException('this article can only be deleted by the person who created it')
+        // if (data.user._id !== req.user._id) throw new ForbiddenException('this article can only be deleted by the person who created it')
 
         data = await this.articlesService.deleteArticle(articleID)
         if (data.affected === 0) throw new BadRequestException(`can't delete articles with this _id = ${articleID}`)

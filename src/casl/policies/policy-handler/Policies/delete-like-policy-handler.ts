@@ -1,10 +1,10 @@
 import { Action } from "src/casl/action.enum";
 import { AppAbility } from "src/casl/casl-ability.factory";
-import { User } from "src/modules/users/schema/user.schema";
+import { Like } from "src/modules/likes/schema/likes.schema";
 import { IPolicyHandler, PolicyHandler } from "../IPolicy-handler";
 
-export class ReadArticlePolicyHandler implements IPolicyHandler {
+export class DeleteLikePolicyHandler implements IPolicyHandler {
     handle(ability: AppAbility) {
-        return ability.can(Action.Read, User);
+        return ability.can(Action.Delete, Like);
     }
 }
