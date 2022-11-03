@@ -1,24 +1,19 @@
 import { Module } from '@nestjs/common';
 // import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-
 import { MONGO_DB } from './config/mongodb.config';
-import { UsersModule } from './modules/users/users.module';
-// import { CheckTokensMiddleware } from './middleware/check-tokens.middleware';
-import { EmailVerificationModule } from './modules/email-verification/email-verification.module';
-import { ArticlesModule } from './modules/articles/articles.module';
-import { LikesModule } from './modules/likes/likes.module';
-import { CommentsModule } from './modules/comments/comments.module';
-import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
-
 import { CaslModule } from './casl/casl.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
-import { HttpExceptionFilter } from './exception/http-exception.filter';
-import { APP_FILTER } from '@nestjs/core';
-// import { APP_GUARD } from '@nestjs/core';
-// import { PoliciesGuard } from './policies-guard/policies.guard';
-// import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { EmailVerificationModule } from './email-verification/email-verification.module';
+import { ArticlesModule } from './articles/articles.module';
+import { LikesModule } from './likes/likes.module';
+import { CommentsModule } from './comments/comments.module';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
+// import { HttpExceptionFilter } from './exception/http-exception.filter';
+// import { APP_FILTER } from '@nestjs/core';
+
 
 @Module({
   imports: [

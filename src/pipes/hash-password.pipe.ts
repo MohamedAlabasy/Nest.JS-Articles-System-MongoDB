@@ -1,6 +1,6 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { CreateUsersDto } from 'src/modules/users/dto/create-users.dto';
+import { CreateUsersDto } from 'src/users/dto/create-users.dto';
 
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import { CheckEmailDto } from 'src/modules/forgot-password/dto/check-email.dto';
+import { CheckEmailDto } from 'src/forgot-password/dto/check-email.dto';
 
 
 @Injectable()

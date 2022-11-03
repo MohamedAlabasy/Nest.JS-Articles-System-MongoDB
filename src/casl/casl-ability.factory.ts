@@ -1,11 +1,12 @@
 import { InferSubjects, ExtractSubjectType, AbilityBuilder, Ability, AbilityClass } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { Action } from "./action.enum";
 
-import { User } from "src/modules/users/schema/user.schema";
-import { Article } from 'src/modules/articles/schema/articles.schema';
-import { Like } from 'src/modules/likes/schema/likes.schema';
-import { Comment } from 'src/modules/comments/schema/comments.schema';
+import { Action } from "./action.enum";
+import { User } from 'src/users/schema/user.schema';
+import { Article } from 'src/articles/schema/articles.schema';
+import { Comment } from 'src/comments/schema/comments.schema';
+import { Like } from 'src/likes/schema/likes.schema';
+
 
 type Subjects = InferSubjects<typeof User | typeof Article | typeof Comment | typeof Like> | 'all';
 // type Subjects = InferSubjects<typeof User> | 'all'; // all is a wildcard for any action

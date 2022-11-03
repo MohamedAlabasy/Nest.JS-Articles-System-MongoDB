@@ -1,6 +1,6 @@
 import { Action } from "src/casl/action.enum";
 import { AppAbility } from "src/casl/casl-ability.factory";
-import { User } from "src/modules/users/schema/user.schema";
+import { User } from "src/users/schema/user.schema";
 import { IPolicyHandler, PolicyHandler } from "../IPolicy-handler";
 
 export class ReadUserPolicyHandler implements IPolicyHandler {
