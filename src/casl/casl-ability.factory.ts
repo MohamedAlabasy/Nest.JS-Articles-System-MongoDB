@@ -6,11 +6,10 @@ import { Model } from 'mongoose';
 import { Action } from "./action.enum";
 import { User } from 'src/users/schema/user.schema';
 import { Article, ArticleDocument } from 'src/articles/schema/articles.schema';
-import { Comment } from 'src/comments/schema/comments.schema';
-import { Like } from 'src/likes/schema/likes.schema';
+import { Comment, CommentDocument } from 'src/comments/schema/comments.schema';
+import { Like, LikeDocument } from 'src/likes/schema/likes.schema';
 
-type Subjects = InferSubjects<typeof User | typeof Article | typeof Comment | typeof Like> | 'all';
-// type Subjects = InferSubjects<typeof User> | 'all'; // all is a wildcard for any action
+type Subjects = InferSubjects<typeof User | typeof Article | typeof Comment | typeof Like> | 'all';  // all is a wildcard for any action
 
 export type AppAbility = Ability<[Action, Subjects]>;
 
@@ -20,6 +19,8 @@ export class CaslAbilityFactory {
     //   https://stackoverflow.com/questions/69381918/nestjs-casl-mongoose-casl-cannot-infer-subject-type-from-mongoose-schema
     constructor(
         @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
+        @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
+        @InjectModel(Like.name) private likeModel: Model<LikeDocument>,
     ) { }
 
     createForUser(user: User) { //my fun
@@ -34,7 +35,7 @@ export class CaslAbilityFactory {
         // }
 
         //#region 
-        // cannot(Action.Mange, User, { orgId: { $ne: user.orgId } }).because('u cant mange orgId')
+        // cannot(Action.Manage, User, { _id: { $lt: user.orgId } }).because('u cant mange orgId')
         //#endregion
 
         //#region "articles"
@@ -43,26 +44,18 @@ export class CaslAbilityFactory {
         can([Action.Update, Action.Delete], this.articleModel, { 'user._id': user._id } as any)
         //#endregion "articles"
 
-
-        //#region "Comment"
-        can([Action.Update, Action.Delete], Comment, { user })
-        // cannot(Action.Delete, Article, { createdAt:10 })
-        //#endregion "Comment"
-
-
-        //#region "Comment"
-        // can([Action.Update, Action.Delete], Like, { user })
-        //#endregion "Comment"
+        // let x: Date = 5465465465
+        //#region "comment"
+        can(Action.Update, this.commentModel, { 'user._id': user._id } as any)
+        can(Action.Delete, this.commentModel, { 'user._id': user._id, createdAt: { $lt: new Date().getDate() + 7 } } as any)
+        // can(Action.Delete, this.commentModel, { createdAt: { $gt: new Date().getDate() + 7 } } as any)
+        //#endregion "comment"
 
 
-        // can(Action.Update, Article, { user: { $ne: user._id } }).because('u cant mange orgId');
-        // if (user) {
-        //     // can(Action.Update, Article, { user: user._id });
-        // } else {
-
-        // }
-        // can(Action.Update, Article, { authorId: user.id });
-        // cannot(Action.Delete, Article, { isPublished: true });
+        //#region "like"
+        can(Action.Update, this.likeModel, { user: user._id })
+        can(Action.Delete, this.likeModel, { user: user._id, createdAt: { $lt: new Date().getDate() + 7 } } as any)
+        //#endregion "like"
 
         return build({
             // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details

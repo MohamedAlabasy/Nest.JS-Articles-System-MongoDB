@@ -21,7 +21,7 @@ export class ArticlesController {
     constructor(
         private readonly articlesService: ArticlesService,
         private readonly usersService: UsersService,
-        private caslAbilityFactory: CaslAbilityFactory
+        private readonly caslAbilityFactory: CaslAbilityFactory
     ) { }
     // #=======================================================================================#
     // #			                          create Article                                   #

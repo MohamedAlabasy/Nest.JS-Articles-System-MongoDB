@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { SELECT } from 'src/utilities/common';
+import { SELECT, CREATED_AT_SELECT } from 'src/utilities/common';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -43,7 +43,7 @@ export class CommentsService {
     // #			                  get comment by id on article                             #
     // #=======================================================================================#
     async getCommentById(_id: string): Promise<Comment> {
-        return await this.commentsModel.findById(_id).populate({ path: 'user article', select: `${SELECT} -user` }).select(SELECT)
+        return await this.commentsModel.findById(_id).populate({ path: 'user article', select: `${SELECT} -user` }).select(CREATED_AT_SELECT)
     }
     // #=======================================================================================#
     // #			                        delete comment                                     #

@@ -8,6 +8,9 @@ export type CommentDocument = Comment & Document
 
 @Schema({ timestamps: true })
 export class Comment {
+    // constructor(createdAt) {
+    //     this.createdAt = new Date(createdAt).getDate()
+    // }
 
     @Prop()
     _id: string;
@@ -21,6 +24,8 @@ export class Comment {
 
     @Prop({ type: String, ref: 'Article' })
     article: Article | string;
+
+    // createdAt: any
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment)

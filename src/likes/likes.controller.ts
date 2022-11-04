@@ -1,5 +1,7 @@
 import { Controller, Post, Delete, Request, Get, Param, UsePipes, ValidationPipe, Body, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Action } from 'src/casl/action.enum';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
 import { PoliciesGuard } from 'src/casl/policies/policies.guard';
 import { DeleteLikePolicyHandler } from 'src/casl/policies/policy-handler/Policies/delete-like-policy-handler';
@@ -13,7 +15,8 @@ import { LikesService } from './likes.service';
 export class LikesController {
     constructor(
         private readonly likesService: LikesService,
-        private readonly articlesService: ArticlesService
+        private readonly articlesService: ArticlesService,
+        private readonly caslAbilityFactory: CaslAbilityFactory
     ) { }
 
     // #=======================================================================================#
@@ -49,7 +52,7 @@ export class LikesController {
     // #			                        unlike article                                     #
     // #=======================================================================================#
     @Delete(':articleID')
-    @CheckPolicies(new DeleteLikePolicyHandler())
+    // @CheckPolicies(new DeleteLikePolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     @UsePipes(ValidationPipe)
@@ -61,9 +64,11 @@ export class LikesController {
         if (!articleData) throw new NotFoundException(`no article with this id =${articleID}`);
 
         data = await this.likesService.getLikeByArticleId(articleID)
+        const ability = this.caslAbilityFactory.createForUser(req.user);
         // if (data && data.user !== userID) throw new ForbiddenException('this like can only be unlike by the person who created it')
-
-        if (data.createdAt + 3600000 > new Date()) throw new ForbiddenException('You can\'t unlike after 7 days')
+        if (!ability.can(Action.Delete, data)) throw new ForbiddenException('this like can only be unlike by the person who created it and it ')
+        // if (data.createdAt + 3600000 > new Date()) throw new ForbiddenException('You can\'t unlike after 7 days')
+        // if (!ability.cannot(Action.Delete, data)) throw new BadRequestException('can\'t update this comment please try again')
 
         data = await this.likesService.checkLikeArticle(userID, articleID)
         if (!data) throw new BadRequestException('You didn\'t like this article before');

@@ -19,7 +19,7 @@ export const EXPIRE_CODE_TIME: number = 3600000;
 
 // remove from database return object 
 export const SELECT: string = '-__v -createdAt -updatedAt';
-export const LIKE_SELECT: string = '-__v';
+export const CREATED_AT_SELECT: string = '-__v -updatedAt';
 
 // remove from database return object 
 export const BASE_URL: string = 'http://127.0.0.1:3000';
