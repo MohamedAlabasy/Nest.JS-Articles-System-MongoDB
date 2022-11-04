@@ -24,13 +24,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/users/login",
+							"raw": "{{url}}/auth",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"users",
-								"login"
+								"auth"
 							]
 						}
 					},
@@ -75,7 +74,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"code\":731811,\r\n    \"user\":\"7c582f5d-09bd-4365-b14c-8c61b054a398\"\r\n}",
+							"raw": "{\r\n    \"code\":108223,\r\n    \"user\":\"9ab9a6d3-55ff-4116-884e-5e7e06043438\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -208,13 +207,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/articles/1",
+							"raw": "{{url}}/articles/5b75509e-0156-4221-a7a6-d95f48affa78",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"articles",
-								"1"
+								"5b75509e-0156-4221-a7a6-d95f48affa78"
 							]
 						}
 					},
@@ -235,13 +234,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/articles/1",
+							"raw": "{{url}}/articles/db97ef1c-05f9-4f49-9931-69177d71f55b",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"articles",
-								"1"
+								"db97ef1c-05f9-4f49-9931-69177d71f55b"
 							]
 						}
 					},
@@ -253,13 +252,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/articles/1",
+							"raw": "{{url}}/articles/5b75509e-0156-4221-a7a6-d95f48affa78",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"articles",
-								"1"
+								"5b75509e-0156-4221-a7a6-d95f48affa78"
 							]
 						}
 					},
@@ -277,7 +276,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"type\":\"like\",\r\n    \"article\":1\r\n}",
+							"raw": "{\r\n    \"type\":\"like\",\r\n    \"article\":\"5b75509e-0156-4221-a7a6-d95f48affa78\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -302,13 +301,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/likes/1",
+							"raw": "{{url}}/likes/5b75509e-0156-4221-a7a6-d95f48affa78",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"likes",
-								"1"
+								"5b75509e-0156-4221-a7a6-d95f48affa78"
 							]
 						}
 					},
@@ -320,13 +319,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/likes/1",
+							"raw": "{{url}}/likes/795650ca-e4b3-4992-98d4-458b7c6abeec",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"likes",
-								"1"
+								"795650ca-e4b3-4992-98d4-458b7c6abeec"
 							]
 						}
 					},
@@ -344,7 +343,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"comment\":\"comment\",\r\n    \"article\":1\r\n}",
+							"raw": "{\r\n    \"comment\":\"comment\",\r\n    \"article\":\"31edaf73-6cff-4452-bbb5-4a8ba047dd4e\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -369,20 +368,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/comments/1",
+							"raw": "{{url}}/comments/5b75509e-0156-4221-a7a6-d95f48affa78",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"comments",
-								"1"
+								"5b75509e-0156-4221-a7a6-d95f48affa78"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "update article",
+					"name": "update comment",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -396,31 +395,53 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/comments/1",
+							"raw": "{{url}}/comments/5a13d6c0-c4c0-4d9f-a908-40bc1f8145e7",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"comments",
-								"1"
+								"5a13d6c0-c4c0-4d9f-a908-40bc1f8145e7"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "delete article",
+					"name": "delete comment",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/comments/1",
+							"raw": "{{url}}/comments/5a13d6c0-c4c0-4d9f-a908-40bc1f8145e7",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"comments",
-								"1"
+								"5a13d6c0-c4c0-4d9f-a908-40bc1f8145e7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "get all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
 							]
 						}
 					},
