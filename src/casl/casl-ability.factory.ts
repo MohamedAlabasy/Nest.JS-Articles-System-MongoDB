@@ -16,13 +16,13 @@ export type AppAbility = Ability<[Action, Subjects]>;
 
 @Injectable()
 export class CaslAbilityFactory {
-    // So the key is to inject the cat model over nest js injection in the casl ability factory. So a factory like this should work:
+    // the key is to inject the cat model over nest js injection in the casl ability factory. So a factory like this should work:
+    //   https://stackoverflow.com/questions/69381918/nestjs-casl-mongoose-casl-cannot-infer-subject-type-from-mongoose-schema
     constructor(
-        @InjectModel(Article.name)
-        private articleModel: Model<ArticleDocument>,
+        @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
     ) { }
 
-    createForUser(_user: User) { //my fun
+    createForUser(user: User) { //my fun
         const { can, cannot, build } = new AbilityBuilder<Ability<[Action, Subjects]>>(Ability as AbilityClass<AppAbility>);
 
         // not equal
@@ -33,18 +33,20 @@ export class CaslAbilityFactory {
         //     cannot(Action.Read, User).because('you isn\'t an admin')
         // }
 
+        //#region 
+        // cannot(Action.Mange, User, { orgId: { $ne: user.orgId } }).because('u cant mange orgId')
+        //#endregion
+
         //#region "articles"
-        // can(Action.Update, Article, { 'user._id': user._id } as any)
-        can(Action.Update, Article, { user: _user._id })
-        // can(Action.Update, Article, { ('user._id'): { $eq: user._id } })
-        // can(Action.Delete, Article, { user })
-        // can([Action.Update, Action.Delete], Article, { user: currentLoggingUser })
+        // can(Action.Update, this.articleModel, { 'user._id': user._id } as any)
+        // can(Action.Delete, this.articleModel, { 'user._id': user._id } as any)
+        can([Action.Update, Action.Delete], this.articleModel, { 'user._id': user._id } as any)
         //#endregion "articles"
 
 
         //#region "Comment"
+        can([Action.Update, Action.Delete], Comment, { user })
         // cannot(Action.Delete, Article, { createdAt:10 })
-        // can([Action.Update, Action.Delete], Comment, { user })
         //#endregion "Comment"
 
 
