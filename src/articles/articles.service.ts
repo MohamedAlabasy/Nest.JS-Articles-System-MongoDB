@@ -26,7 +26,7 @@ export class ArticlesService {
     // #			                        get article by id                                  #
     // #=======================================================================================#
     async getArticleById(_id: string): Promise<Article> {
-        return await this.articlesModel.findOne({ _id }).populate({ path: 'user', select: SELECT }).select(SELECT)
+        return await this.articlesModel.findOne({ _id })/*. populate({ path: 'user', select: SELECT }) */.select(SELECT)
     }
     // #=======================================================================================#
     // #			                      get article by title                                 #

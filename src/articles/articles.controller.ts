@@ -7,7 +7,7 @@ import { PoliciesGuard } from 'src/casl/policies/policies.guard';
 import { Article } from './schema/articles.schema';
 import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
 import { UpdateArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/update-article-policy-handler';
-import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
+import { AppAbility, CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { Action } from 'src/casl/action.enum';
 // import { ForbiddenError } from '@casl/ability';
 import { DeleteArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/delete-article-policy-handler';
@@ -77,7 +77,7 @@ export class ArticlesController {
     // #			                        update articles                                    #
     // #=======================================================================================#
     @Patch(':articleID')
-    @CheckPolicies(new UpdateArticlePolicyHandler())
+    // @CheckPolicies(new UpdateArticlePolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     @UsePipes(ValidationPipe)
@@ -91,12 +91,12 @@ export class ArticlesController {
 
         data = await this.articlesService.getArticleById(articleID)
         if (!data) throw new NotFoundException(`no articles with this id = ${articleID}`)
+        console.log(data);
 
 
         const ability = this.caslAbilityFactory.createForUser(req.user);
-        // console.log(ability);
-        console.log(data.user._id, '00', req.user._id);
-        console.log(ability.can(Action.Update, data));
+        console.log('Action.Update 1', ability.can(Action.Update, data));
+
         // ForbiddenError.from(ability).throwUnlessCan(Action.Update, { private: true })
 
 

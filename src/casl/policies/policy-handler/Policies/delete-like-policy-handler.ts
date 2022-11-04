@@ -5,6 +5,7 @@ import { IPolicyHandler, PolicyHandler } from "../IPolicy-handler";
 
 export class DeleteLikePolicyHandler implements IPolicyHandler {
     handle(ability: AppAbility) {
-        return ability.can(Action.Delete, Like);
+        // return ability.can(Action.Delete, Like);
+        return true
     }
 }

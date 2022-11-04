@@ -5,6 +5,7 @@ import { IPolicyHandler, PolicyHandler } from "../IPolicy-handler";
 
 export class DeleteCommentPolicyHandler implements IPolicyHandler {
     handle(ability: AppAbility) {
-        return ability.can(Action.Delete, Comment);
+        // return ability.can(Action.Delete, Comment);
+        return true
     }
 }
