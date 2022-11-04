@@ -29,11 +29,11 @@ npm run start:dev
 
 <h3 align="center">To help you understand the project</h3>
 
-## Folder Structure
+<!-- ## Folder Structure
 
 ```bash
 ├── src
-│   ├── ability => `for casl`
+│   ├── casl => `for casl`
 │   │      ├── ability.factory.ts => `for handel what user can and cannot do`
 │   │      └── ability.module.ts
 │   │
@@ -49,47 +49,46 @@ npm run start:dev
 │   │       └── logger.middleware.middleware.ts => `for log url, method and statue of requests`
 │   │
 │   │
-│   ├── models
-│   │   ├── articles => `for handel articles code`
-│   │   │     ├── dto => `for handel data transfer object for articles`
-│   │   │     ├── schema => `for articles schema`
-│   │   │     ├── articles.controller.ts => `for handel articles functions and routes (endpoints)`
-│   │   │     ├── articles.module.ts => `for handel articles Models`
-│   │   │     └── articles.service.ts => `for handel articles database connection and query`
-│   │   │
-│   │   ├── comments => `for handel comments code`
-│   │   │     ├── dto
-│   │   │     ├── schema
-│   │   │     ├── comments.controller.ts
-│   │   │     ├── comments.module.ts
-│   │   │     └── comments.service.ts
-│   │   │
-│   │   ├── email-verification => `for handel email-verification code`
-│   │   │     ├── dto
-│   │   │     ├── schema
-│   │   │     ├── email-verification.module.ts
-│   │   │     └── email-verification.service.ts
-│   │   │
-│   │   ├── forgot-password => `for handel forgot-password code`
-│   │   │     ├── dto
-│   │   │     ├── schema
-│   │   │     ├── forgot-password.controller.ts
-│   │   │     ├── forgot-password.module.ts
-│   │   │     └── forgot-password.service.ts
-│   │   │
-│   │   ├── likes => `for handel likes code`
-│   │   │     ├── dto
-│   │   │     ├── schema
-│   │   │     ├── likes.controller.ts
-│   │   │     ├── likes.module.ts
-│   │   │     └── likes.service.ts
-│   │   │
-│   │   └── users => `for handel users code`
-│   │         ├── dto
-│   │         ├── schema
-│   │         ├── users.controller.ts
-│   │         ├── users.module.ts
-│   │         └── users.service.ts
+│   │── articles => `for handel articles code`
+│   │     ├── dto => `for handel data transfer object for articles`
+│   │     ├── schema => `for articles schema`
+│   │     ├── articles.controller.ts => `for handel articles functions and routes (endpoints)`
+│   │     ├── articles.module.ts => `for handel articles Models`
+│   │     └── articles.service.ts => `for handel articles database connection and query`
+│   │
+│   │── comments => `for handel comments code`
+│   │     ├── dto
+│   │     ├── schema
+│   │     ├── comments.controller.ts
+│   │     ├── comments.module.ts
+│   │     └── comments.service.ts
+│   │
+│   │── email-verification => `for handel email-verification code`
+│   │     ├── dto
+│   │     ├── schema
+│   │     ├── email-verification.module.ts
+│   │     └── email-verification.service.ts
+│   │
+│   │── forgot-password => `for handel forgot-password code`
+│   │     ├── dto
+│   │     ├── schema
+│   │     ├── forgot-password.controller.ts
+│   │     ├── forgot-password.module.ts
+│   │     └── forgot-password.service.ts
+│   │
+│   │── likes => `for handel likes code`
+│   │     ├── dto
+│   │     ├── schema
+│   │     ├── likes.controller.ts
+│   │     ├── likes.module.ts
+│   │     └── likes.service.ts
+│   │
+│   │── users => `for handel users code`
+│   │      ├── dto
+│   │      ├── schema
+│   │      ├── users.controller.ts
+│   │      ├── users.module.ts
+│   │      └── users.service.ts
 │   │
 │   │
 │   ├── pipes => `for handel custom pipe`
@@ -108,7 +107,7 @@ npm run start:dev
 │   │
 │   └── main.ts => `to run the server`
 └──
-```
+``` -->
 
 ## DataBase ERD
 
