@@ -5,12 +5,13 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { PoliciesGuard } from 'src/casl/policies/policies.guard';
 import { Article } from './schema/articles.schema';
-import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
-import { UpdateArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/update-article-policy-handler';
-import { AppAbility, CaslAbilityFactory } from 'src/casl/casl-ability.factory';
+// import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
+// import { UpdateArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/update-article-policy-handler';
+// import { AppAbility, CaslAbilityFactory } from 'src/casl/casl-ability.factory';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { Action } from 'src/casl/action.enum';
 // import { ForbiddenError } from '@casl/ability';
-import { DeleteArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/delete-article-policy-handler';
+// import { DeleteArticlePolicyHandler } from 'src/casl/policies/policy-handler/Policies/delete-article-policy-handler';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 // import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 
@@ -91,16 +92,11 @@ export class ArticlesController {
 
         data = await this.articlesService.getArticleById(articleID)
         if (!data) throw new NotFoundException(`no articles with this id = ${articleID}`)
-        console.log(data);
 
 
         const ability = this.caslAbilityFactory.createForUser(req.user);
-        console.log('Action.Update 1', ability.can(Action.Update, data));
-
-        // ForbiddenError.from(ability).throwUnlessCan(Action.Update, { private: true })
-
-
         // if (data.user.id !== req.user._id) throw new ForbiddenException('this article can only be modified by the person who created it')
+        if (!ability.can(Action.Update, data)) throw new ForbiddenException('this article can only be modified by the person who created it')
 
 
         data = await this.articlesService.updateArticle(articleID, articleData)
@@ -115,7 +111,7 @@ export class ArticlesController {
     // #			                        delete articles                                    #
     // #=======================================================================================#
     @Delete(':articleID')
-    @CheckPolicies(new DeleteArticlePolicyHandler())
+    // @CheckPolicies(new DeleteArticlePolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     async deleteArticle(@Param('articleID', ParseUUIDPipe) articleID: string, @Request() req) {
@@ -126,7 +122,11 @@ export class ArticlesController {
 
         data = await this.articlesService.getArticleById(articleID)
         if (!data) throw new NotFoundException(`no articles with this _id = ${articleID}`)
+
+        const ability = this.caslAbilityFactory.createForUser(req.user);
         // if (data.user._id !== req.user._id) throw new ForbiddenException('this article can only be deleted by the person who created it')
+        if (!ability.can(Action.Delete, data)) throw new ForbiddenException('this article can only be deleted by the person who created it')
+
 
         data = await this.articlesService.deleteArticle(articleID)
         if (data.affected === 0) throw new BadRequestException(`can't delete articles with this _id = ${articleID}`)
