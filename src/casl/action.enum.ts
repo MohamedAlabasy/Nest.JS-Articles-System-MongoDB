@@ -1,5 +1,5 @@
 export enum Action {
-    Manage = 'manage', // wildcard for any action
+    Manage = 'manage', // Wildcard for any action
     Create = 'create',
     Read = 'read',
     Update = 'update',
