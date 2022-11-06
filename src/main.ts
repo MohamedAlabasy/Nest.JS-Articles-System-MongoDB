@@ -6,6 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule
+    // ,{abortOnError: false}
     // ,{ logger: false }
   );
   app.useGlobalInterceptors(new LoggingInterceptor());
