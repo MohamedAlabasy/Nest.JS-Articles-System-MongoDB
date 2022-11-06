@@ -8,7 +8,6 @@ export class UpdateCommentPolicyHandler implements IPolicyHandler {
 
         // console.log('ability Comment = ', ability.can(Action.Update, Comment));
 
-        // return ability.can(Action.Update, Comment);
-        return true
+        return ability.can(Action.Update, Comment);
     }
 }

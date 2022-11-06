@@ -8,7 +8,6 @@ export class ReadUserPolicyHandler implements IPolicyHandler {
     handle(ability: AppAbility) {
         // console.log('ability = ', ability.can(Action.Read, User));
         // console.log('ability n = ', ability.cannot(Action.Read, User));
-        // return ability.can(Action.Read, User);
-        return true
+        return ability.can(Action.Read, User);
     }
 }
