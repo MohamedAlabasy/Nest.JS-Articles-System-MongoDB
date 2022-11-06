@@ -26,10 +26,6 @@ export class CaslAbilityFactory {
     createForUser(user: User) { //my fun
         const { can, cannot, build } = new AbilityBuilder<Ability<[Action, Subjects]>>(Ability as AbilityClass<AppAbility>);
 
-        //#region 
-        // cannot(Action.Manage, User, { _id: { $lt: user.orgId } }).because('u cant mange orgId')
-        //#endregion
-
         //#region "articles"
         // can(Action.Update, this.articleModel, { 'user._id': user._id } as any)
         // can(Action.Delete, this.articleModel, { 'user._id': user._id } as any)
@@ -39,7 +35,6 @@ export class CaslAbilityFactory {
         //#region "comment"
         can(Action.Update, this.commentModel, { 'user._id': user._id } as any)
         can(Action.Delete, this.commentModel, { 'user._id': user._id, createdAt: { $lt: new Date().getDate() + 7 } } as any)
-        // can(Action.Delete, this.commentModel, { createdAt: { $gt: new Date().getDate() + 7 } } as any)
         //#endregion "comment"
 
         //#region "like"
