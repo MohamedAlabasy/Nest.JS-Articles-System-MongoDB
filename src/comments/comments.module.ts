@@ -5,7 +5,7 @@ import { ArticlesService } from '../articles/articles.service';
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';
 import { Article, ArticleSchema } from '../articles/schema/articles.schema';
-import { CaslModule } from 'src/casl/casl.module';
+// import { CaslModule } from 'src/casl/casl.module';
 
 @Module({
     imports: [

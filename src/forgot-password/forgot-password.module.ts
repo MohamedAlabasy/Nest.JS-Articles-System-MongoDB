@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CaslModule } from 'src/casl/casl.module';
+// import { CaslModule } from 'src/casl/casl.module';
 import { User, UserSchema } from '../users/schema/user.schema';
 import { UsersService } from '../users/users.service';
 import { ForgotPasswordController } from './forgot-password.controller';

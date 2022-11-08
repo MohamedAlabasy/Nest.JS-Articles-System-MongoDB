@@ -8,7 +8,7 @@ import { User, UserSchema } from '../users/schema/user.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersService } from '../users/users.service';
 import { AuthController } from './auth.controller';
-import { CaslModule } from 'src/casl/casl.module';
+// import { CaslModule } from 'src/casl/casl.module';
 import { ACCESS_TOKEN_SECRET } from 'src/config/token.config';
 
 @Module({

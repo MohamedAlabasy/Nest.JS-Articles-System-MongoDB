@@ -5,7 +5,7 @@ import { EmailVerificationService } from '../email-verification/email-verificati
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { EmailVerification, EmailVerificationSchema } from '../email-verification/schema/email-verification.schema';
-import { CaslModule } from 'src/casl/casl.module';
+// import { CaslModule } from 'src/casl/casl.module';
 
 
 @Module({
