@@ -7,7 +7,6 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { EmailVerificationModule } from './email-verification/email-verification.module';
 import { ArticlesModule } from './articles/articles.module';
-import { LikesModule } from './likes/likes.module';
 import { CommentsModule } from './comments/comments.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
@@ -23,7 +22,6 @@ import { JwtStrategy } from './auth/strategies/jwt.strategy';
     AuthModule,
     EmailVerificationModule,
     ArticlesModule,
-    LikesModule,
     CommentsModule,
     ForgotPasswordModule,
   ],
