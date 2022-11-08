@@ -11,7 +11,7 @@ import { ForgotPassword, ForgotPasswordSchema } from './schema/forgot-password.e
     imports: [
         MongooseModule.forFeature([{ name: ForgotPassword.name, schema: ForgotPasswordSchema }]),
         MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-        CaslModule
+        // CaslModule
     ],
     controllers: [ForgotPasswordController],
     providers: [ForgotPasswordService, UsersService]

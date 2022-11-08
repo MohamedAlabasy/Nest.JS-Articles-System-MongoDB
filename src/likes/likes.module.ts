@@ -11,7 +11,7 @@ import { Like, LikeSchema } from './schema/likes.schema';
     imports: [
         MongooseModule.forFeature([{ name: Like.name, schema: LikeSchema }]),
         MongooseModule.forFeature([{ name: Article.name, schema: ArticleSchema }]),
-        CaslModule
+        // CaslModule
     ],
     controllers: [LikesController],
     providers: [LikesService, ArticlesService]

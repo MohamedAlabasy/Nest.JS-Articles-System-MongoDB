@@ -12,7 +12,7 @@ import { CaslModule } from 'src/casl/casl.module';
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     MongooseModule.forFeature([{ name: EmailVerification.name, schema: EmailVerificationSchema }]),
-    CaslModule,
+    // CaslModule,
   ],
   controllers: [UsersController],
   providers: [UsersService, EmailVerificationService],

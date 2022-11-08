@@ -11,7 +11,7 @@ import { CaslModule } from 'src/casl/casl.module';
     imports: [
         MongooseModule.forFeature([{ name: Article.name, schema: ArticleSchema }]),
         MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-        CaslModule
+        // CaslModule
     ],
     controllers: [ArticlesController],
     providers: [ArticlesService, UsersService]

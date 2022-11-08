@@ -1,4 +1,4 @@
-import { Controller, Get, Request, Post, Patch, Delete, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, ConflictException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Request, Post, Patch, Delete, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, ConflictException, UseGuards, Res } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -30,6 +30,7 @@ export class ArticlesController {
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     @UsePipes(ValidationPipe)
+    // async createArticle(@Body() articleData: CreateArticleDto, @Request() req: Request) {
     async createArticle(@Body() articleData: CreateArticleDto, @Request() req) {
         let data: Article;
         // to add user id to articleData from token

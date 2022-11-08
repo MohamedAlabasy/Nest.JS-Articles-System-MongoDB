@@ -15,7 +15,7 @@ import { ACCESS_TOKEN_SECRET } from 'src/config/token.config';
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     PassportModule,
-    CaslModule,
+    // CaslModule,
     JwtModule.register({
       secret: ACCESS_TOKEN_SECRET,
       // signOptions: { expiresIn: '60s' },
