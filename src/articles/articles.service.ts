@@ -59,6 +59,6 @@ export class ArticlesService {
     // #			                     update number of Likes                                #
     // #=======================================================================================#
     async updateNumberOfLikes(_id: string, likes: number): Promise<Article> {
-        return await this.articlesModel.findByIdAndUpdate({ _id }, { likes }, { new: true }) // new: true to return with new data 
+        return await this.articlesModel.findByIdAndUpdate({ _id }, { $inc: { likes } }, { new: true }) // new: true to return with new data 
     }
 }

@@ -38,7 +38,7 @@ export class LikesController {
 
         data = await this.likesService.createLikeArticle(createLikeDto)
         if (!data) throw new BadRequestException('can\'t like this article please try again');
-        else await this.articlesService.updateNumberOfLikes(data.article, articleData.likes + 1)
+        else await this.articlesService.updateNumberOfLikes(data.article, 1)
 
         // to remove __v from object before retune data to user 
         data = (data as any).toObject();
@@ -75,7 +75,7 @@ export class LikesController {
 
         data = await this.likesService.unLikeArticle(data._id)
         if (!data) throw new BadRequestException('can\'t unLiked this article');
-        else await this.articlesService.updateNumberOfLikes(data.article, articleData.likes - 1)
+        else await this.articlesService.updateNumberOfLikes(data.article, -1)
 
         return { message: 'unLiked successfully' }
     }
