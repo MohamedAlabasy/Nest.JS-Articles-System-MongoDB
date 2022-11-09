@@ -3,10 +3,10 @@ import { CreateUsersDto } from './dto/create-users.dto';
 import { UsersService } from './users.service';
 import { EmailVerificationService } from '../email-verification/email-verification.service';
 import { CreateEmailActivateDto } from '../email-verification/dto/create-email-activate.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { ReadUserPolicyHandler } from 'src/casl/policies/policy-handler/Policies/read-users-policy-handler';
-import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
-import { PoliciesGuard } from 'src/casl/policies/policies.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+// import { ReadUserPolicyHandler } from 'src/casl/policies/policy-handler/Policies/read-users-policy-handler';
+// import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
+import { PoliciesGuard } from 'src/guards/policies.guard';
 import { RegisterPipe } from 'src/pipes/register.pipe';
 import { EXPIRE_CODE_TIME, REGISTER_CODE } from 'src/utilities/common';
 import { emailVerification } from 'src/utilities/email/emailVerification';
@@ -91,7 +91,7 @@ export class UsersController {
     // #=======================================================================================#
     @Get()
     @HttpCode(HttpStatus.OK)
-    @CheckPolicies(new ReadUserPolicyHandler())
+    // @CheckPolicies(new ReadUserPolicyHandler())
     @UseGuards(PoliciesGuard)
     @UseGuards(JwtAuthGuard)
     async getAllUsers(@Request() req) {

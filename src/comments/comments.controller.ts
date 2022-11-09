@@ -1,16 +1,14 @@
 import { Controller, Get, Post, Patch, Delete, Request, Body, ValidationPipe, UsePipes, Param, ParseUUIDPipe, NotFoundException, BadRequestException, ForbiddenException, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Action } from 'src/casl/action.enum';
 import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
-import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
-import { PoliciesGuard } from 'src/casl/policies/policies.guard';
-import { DeleteCommentPolicyHandler } from 'src/casl/policies/policy-handler/Policies/delete-comment-policy-handler';
-import { UpdateCommentPolicyHandler } from 'src/casl/policies/policy-handler/Policies/update-comment-policy-handler';
+// import { CheckPolicies } from 'src/casl/policies/check-policies.decorator';
+import { PoliciesGuard } from 'src/guards/policies.guard';
 import { ArticlesService } from '../articles/articles.service';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto copy';
-import { Comment } from './schema/comments.schema';
+// import { Comment } from './schema/comments.schema';
 // import { HttpExceptionFilter } from './../../exception/http-exception.filter';
 
 @Controller('comments')

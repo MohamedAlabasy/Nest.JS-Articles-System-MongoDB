@@ -32,15 +32,18 @@ export class CaslAbilityFactory {
         can([Action.Update, Action.Delete], this.articleModel, { 'user._id': user._id } as any)
         //#endregion "articles"
 
+
         //#region "comment"
         can(Action.Update, this.commentModel, { 'user._id': user._id } as any)
         can(Action.Delete, this.commentModel, { 'user._id': user._id, createdAt: { $lt: new Date().getDate() + 7 } } as any)
         //#endregion "comment"
 
+
         //#region "like"
         can(Action.Update, this.likeModel, { user: user._id })
         can(Action.Delete, this.likeModel, { user: user._id, createdAt: { $lt: new Date().getDate() + 7 } } as any)
         //#endregion "like"
+
 
         return build({
             // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details

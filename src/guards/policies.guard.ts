@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable, NotFoundException } from "@n
 import { Reflector } from "@nestjs/core";
 import { AppAbility, CaslAbilityFactory } from "src/casl/casl-ability.factory";
 import { CHECK_POLICIES_KEY } from "src/config/policy";
-import { PolicyHandler } from "./policy-handler/IPolicy-handler";
+import { PolicyHandler } from "../casl/policies/policy-handler/IPolicy-handler";
 
 
 @Injectable()
