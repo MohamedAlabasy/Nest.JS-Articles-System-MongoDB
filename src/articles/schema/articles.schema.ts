@@ -22,6 +22,7 @@ export class Article {
     // for relations    
     // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Owner' });
     @Prop({ type: String, ref: 'User' })
+    // @Prop({ type: String, ref: 'User', autopopulate: true })
     user: User | string;
 
 }
