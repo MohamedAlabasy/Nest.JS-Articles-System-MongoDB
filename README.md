@@ -7,7 +7,7 @@ Every person who created an article, comment or like can only edit or delete it 
 
 ## To run this project
 
-`Step 1` : To use this project must install [Node.js](https://nodejs.org/en/) and [Mongodb](https://www.mongodb.com/try/download/community) Then Download the source code
+`Step 1` : To use this project must install [Node.js](https://nodejs.org/en/), [Nest.Js](https://nestjs.com/) and [Mongodb](https://www.mongodb.com/try/download/community) Then Download the source code
 
 ```
 git clone https://github.com/MohamedAlabasy/Nest.JS-Articles-System-MongoDB.git
